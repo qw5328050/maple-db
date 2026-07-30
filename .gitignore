@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.pyc
+__pycache__/
+/tmp/
+_scrape_*.py
+data/scrape_*.py
+data/*_batch*.json
+data/monsters_basic.json
+data/maps_basic.json

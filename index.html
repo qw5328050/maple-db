@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冒险岛怀旧服数据库 v2</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #21262d;
+  --card: #1c2128;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --accent: #f0883e;
+  --accent2: #f5c518;
+  --green: #3fb950;
+  --red: #f85149;
+  --blue: #58a6ff;
+  --purple: #bc8cff;
+  --boss: #ff6b6b;
+  --boss-bg: #3d1212;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif; 
+  background: var(--bg); color: var(--text); min-height: 100vh; 
+  line-height: 1.5;
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Header */
+header {
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.logo { font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.logo img { width: 28px; height: 28px; }
+
+nav { display: flex; gap: 2px; flex-wrap: wrap; }
+nav button {
+  background: none; border: none; color: var(--text2); padding: 6px 14px; 
+  border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: all .15s; white-space: nowrap;
+}
+nav button:hover { color: var(--text); background: var(--bg3); }
+nav button.active { background: var(--accent); color: #fff; }
+
+.search-box { flex: 1; min-width: 180px; position: relative; }
+.search-box input {
+  width: 100%; padding: 7px 12px; border-radius: 8px; 
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px;
+  transition: border-color .2s;
+}
+.search-box input:focus { outline: none; border-color: var(--accent); }
+.search-box .clear-btn {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--text2); cursor: pointer; font-size: 16px; display: none;
+}
+
+/* Main */
+main { max-width: 1400px; margin: 0 auto; padding: 16px; }
+
+/* Filters */
+.filters { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+.filters select, .filters input[type="number"] {
+  padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); font-size: 13px;
+}
+.filters input[type="number"] { width: 70px; }
+.filter-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 20px; font-size: 12px;
+  background: var(--bg3); color: var(--text2); cursor: pointer; border: 1px solid transparent;
+  transition: all .15s; user-select: none;
+}
+.filter-tag:hover { border-color: var(--text2); }
+.filter-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.result-count { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px; cursor: pointer; transition: all .2s; position: relative; overflow: hidden;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+.card.boss { border-left: 3px solid var(--boss); }
+.card .card-header-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.card .card-thumb { 
+  width: 56px; height: 56px; object-fit: contain; border-radius: 6px;
+  background: var(--bg); flex-shrink: 0;
+  image-rendering: pixelated;
+}
+.card .map-thumb { width: 72px; height: 54px; }
+.card .card-info { flex: 1; min-width: 0; }
+.card .card-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.card .card-sub { font-size: 11px; color: var(--text2); margin-top: 1px; }
+.card .card-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.card .stat-pill {
+  padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+  background: var(--bg); color: var(--text2);
+}
+.card .stat-pill.hp { color: var(--green); }
+.card .stat-pill.exp { color: var(--accent2); }
+.card .badge-row { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.badge {
+  display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600;
+}
+.badge-boss { background: var(--boss-bg); color: var(--boss); }
+.badge-aggro { background: #3d1f12; color: var(--accent); }
+.badge-map { background: var(--bg3); color: var(--blue); }
+.badge-drop { background: #1a2e1a; color: var(--green); }
+
+.drop-preview-row {
+  display: flex; gap: 2px; margin-top: 6px; padding-top: 6px;
+  border-top: 1px solid var(--border); flex-wrap: wrap; align-items: center;
+}
+.drop-preview-row img {
+  width: 28px; height: 28px; object-fit: contain; image-rendering: pixelated;
+  background: var(--bg); border-radius: 4px; padding: 2px;
+}
+
+/* Detail panel */
+.detail-overlay {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.6);
+  display: flex; align-items: flex-start; justify-content: center; padding: 20px;
+  overflow-y: auto;
+}
+.detail-panel {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+  max-width: 900px; width: 100%; padding: 24px; position: relative;
+  animation: slideUp .2s ease;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.detail-close {
+  position: absolute; top: 12px; right: 16px; background: none; border: none;
+  color: var(--text2); font-size: 24px; cursor: pointer; line-height: 1;
+}
+.detail-close:hover { color: var(--text); }
+.detail-header { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+.detail-thumb { width: 80px; height: 80px; object-fit: contain; image-rendering: pixelated; border-radius: 8px; background: var(--bg); }
+.detail-title { font-size: 22px; font-weight: 700; }
+.detail-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.detail-tags { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+
+.info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 16px 0; }
+.info-item { background: var(--bg); padding: 8px 12px; border-radius: 6px; }
+.info-item .ilabel { font-size: 11px; color: var(--text2); }
+.info-item .ivalue { font-size: 15px; font-weight: 600; }
+
+.section { margin: 20px 0; }
+.section h3 { font-size: 15px; color: var(--accent2); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+
+.drop-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.drop-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); 
+  border-radius: 8px; font-size: 13px; cursor: pointer; transition: .15s;
+  min-width: 0;
+}
+.drop-item:hover { border-color: var(--accent); background: var(--bg3); }
+.drop-item img { 
+  width: 28px; height: 28px; object-fit: contain; image-rendering: pixelated; 
+  border-radius: 4px; flex-shrink: 0;
+}
+.drop-item .drop-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.drop-item .drop-en { font-size: 10px; color: var(--text2); margin-left: 4px; }
+.drop-cat-badge { 
+  font-size: 10px; color: var(--accent2); margin-left: auto; 
+  background: rgba(245,197,24,.1); padding: 1px 6px; border-radius: 3px; white-space: nowrap;
+}
+
+.link-table { width: 100%; border-collapse: collapse; }
+.link-table th, .link-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
+.link-table th { color: var(--text2); font-weight: 500; }
+.link-table tr { cursor: pointer; transition: .1s; }
+.link-table tr:hover { background: var(--bg3); }
+
+/* Town filter chips */
+.town-chips { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+.town-chip {
+  padding: 4px 10px; border-radius: 16px; font-size: 12px; cursor: pointer;
+  background: var(--bg3); color: var(--text2); border: 1px solid transparent;
+  transition: .15s; white-space: nowrap;
+}
+.town-chip:hover { border-color: var(--text2); }
+.town-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text2); }
+.empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+/* Loading */
+.loading { text-align: center; padding: 40px; color: var(--text2); }
+.spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .header-inner { gap: 8px; }
+  .logo { font-size: 18px; }
+  nav button { padding: 4px 10px; font-size: 12px; }
+  .detail-panel { padding: 16px; }
+  .detail-header { flex-direction: column; align-items: center; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="header-inner">
+  <div class="logo">🍁 冒险岛怀旧服 DB</div>
+  <nav id="tabs">
+    <button data-tab="monsters" class="active">怪物图鉴</button>
+    <button data-tab="maps">地图图鉴</button>
+    <button data-tab="items">物品图鉴</button>
+    <button data-tab="navigate">🗺️ 地图导航</button>
+  </nav>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="搜索怪物、物品、卷轴...">
+    <button class="clear-btn" id="clearSearch">✕</button>
+  </div>
+</div>
+</header>
+
+<main id="content"><div class="loading"><div class="spinner"></div><div style="margin-top:12px">加载数据中...</div></div></main>
+
+<script>
+// ===== DATA =====
+let MONSTERS = [], MAPS = [], ITEMS = [];
+let MONSTER_BY_ID = {}, MAP_BY_ID = {}, ITEM_BY_ID = {};
+let ENTRANCE_HINTS = {}, ITEM_ID_MAP = {}, ITEM_ID_MAP_REV = {};
+let currentTab = 'monsters', currentDetail = null;
+let allTowns = [];
+
+const IMG_MOB = 'https://static.mxdzlk.com/CMS079/images/mob/';
+const IMG_MAP = 'https://static.mxdzlk.com/images/map/';
+const IMG_ITEM = 'https://static.mxdzlk.com/CMS079/images/item/';
+
+function mobImg(id) { return IMG_MOB + id + '/preview.png'; }
+function mapImg(id) { return IMG_MAP + id + '.png'; }
+function itemImg(id) {
+  const realId = ITEM_ID_MAP[String(id)] || id;
+  return IMG_ITEM + realId + '/preview.png';
+}
+
+async function init() {
+  try {
+    const [mResp, mpResp, iResp, eResp, imResp, revResp] = await Promise.all([
+      fetch('data/monsters_detail.json'),
+      fetch('data/maps_detail.json'),
+      fetch('data/items.json').catch(() => ({json: () => []})),
+      fetch('data/entrance_hints.json').catch(() => ({json: () => ({entrances: []})})),
+      fetch('data/item_id_map.json').catch(() => ({json: () => ({})})),
+      fetch('data/item_id_map_rev.json').catch(() => ({json: () => ({})}))
+    ]);
+    MONSTERS = await mResp.json();
+    MAPS = await mpResp.json();
+    ITEMS = (await iResp.json()).items || await iResp.json() || [];
+    const eData = await eResp.json();
+
+    for (const m of MONSTERS) MONSTER_BY_ID[m.id] = m;
+    for (const m of MAPS) MAP_BY_ID[m.id] = m;
+    for (const i of ITEMS) ITEM_BY_ID[i.id] = i;
+
+    ENTRANCE_HINTS = {};
+    for (const e of (eData.entrances || [])) {
+      ENTRANCE_HINTS[e.hidden_map_id] = e;
+    }
+
+    ITEM_ID_MAP = await imResp.json();
+    ITEM_ID_MAP_REV = await revResp.json();
+
+    allTowns = [...new Set(MAPS.map(m => m.town).filter(Boolean))].sort();
+
+    // Build monster area mapping for area filter
+    MONSTERS.forEach(m => {
+      const areas = new Set();
+      (m.map_locations || []).forEach(loc => {
+        const mp = MAP_BY_ID[loc.id];
+        if (mp) areas.add(mp.area || mp.town || '未知');
+      });
+      m._areas = [...areas];
+    });
+
+    document.getElementById('search').addEventListener('input', debounce(render, 200));
+    document.getElementById('clearSearch').addEventListener('click', () => {
+      document.getElementById('search').value = '';
+      render();
+    });
+    document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', (e) => {
+      document.querySelectorAll('#tabs button').forEach(x => x.classList.remove('active'));
+      e.target.classList.add('active');
+      currentTab = e.target.dataset.tab;
+      currentDetail = null;
+      document.getElementById('search').value = '';
+      // Update placeholder per tab
+      const ph = {monsters:'搜索怪物、物品、卷轴...', maps:'搜索地图...', items:'搜索物品...', navigate:''};
+      document.getElementById('search').placeholder = ph[currentTab] || '';
+      render();
+    }));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && currentDetail) { closeDetail(); }
+    });
+
+    render();
+  } catch(e) {
+    document.getElementById('content').innerHTML = `<div class="empty-state"><div class="icon">⚠️</div>数据加载失败: ${e.message}</div>`;
+  }
+}
+
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+// ===== RENDER =====
+function render() {
+  if (currentDetail) { renderDetail(); return; }
+  const q = document.getElementById('search').value.trim();
+  document.getElementById('clearSearch').style.display = q ? 'block' : 'none';
+  
+  switch(currentTab) {
+    case 'monsters': renderMonsters(q); break;
+    case 'maps': renderMaps(q); break;
+    case 'items': renderItems(q); break;
+    case 'navigate': renderNavigate(); break;
+  }
+}
+
+// ===== MONSTERS =====
+let mLevelMin = '', mLevelMax = '', mOnlyBoss = false, mAreaFilter = '';
+
+function renderMonsters(q) {
+  let filtered = MONSTERS;
+  if (mAreaFilter) {
+    if (mAreaFilter === '金银岛') {
+      const vtTowns = ['彩虹村','明珠港','射手村','魔法密林','勇士部落','废弃都市','林中之城','黄金海岸'];
+      filtered = filtered.filter(m => (m._areas || []).some(a => a === '金银岛' || vtTowns.includes(a)));
+    } else {
+      filtered = filtered.filter(m => (m._areas || []).includes(mAreaFilter));
+    }
+  }
+  if (q) {
+    const ql = q.toLowerCase();
+    filtered = filtered.filter(m => 
+      (m.cn_name || '').toLowerCase().includes(ql) ||
+      (m.tw_name || '').toLowerCase().includes(ql) ||
+      (m.en_name || '').toLowerCase().includes(ql) ||
+      String(m.id).includes(ql) ||
+      (m.map_locations || []).some(x => (x.cn_name || x.name || '').toLowerCase().includes(ql)) ||
+      (m.drops || []).some(d => (d.cn_name || '').toLowerCase().includes(ql))
+    );
+  }
+  if (mOnlyBoss) filtered = filtered.filter(m => (m.tags || []).includes('BOSS'));
+  if (mLevelMin) filtered = filtered.filter(m => parseInt(m.level || '1') >= parseInt(mLevelMin));
+  if (mLevelMax) filtered = filtered.filter(m => parseInt(m.level || '1') <= parseInt(mLevelMax));
+
+  const html = filtered.map(m => {
+    const lv = m.level || '?';
+    const hp = m.hp || '?';
+    const exp = m.exp || '?';
+    const isBoss = (m.tags || []).includes('BOSS');
+    const isAggro = (m.tags || []).includes('主动攻击');
+    const mapNames = (m.map_locations || []).slice(0, 2).map(x => x.cn_name || x.name).join(', ');
+    const drops = m.drops || [];
+    const dropPreviews = drops.slice(0, 6);
+    return `
+    <div class="card ${isBoss ? 'boss' : ''}" onclick="showDetail('monster','${m.id}')">
+      <div class="card-header-row">
+        <img class="card-thumb" src="${mobImg(m.id)}" loading="lazy" onerror="this.style.display='none'" alt="">
+        <div class="card-info">
+          <div class="card-name">${m.cn_name || '未知'} <span style="font-size:12px;color:var(--text2)">Lv.${lv}</span></div>
+          <div class="card-sub">${m.en_name || ''} ${m.tw_name ? '· ' + m.tw_name : ''}</div>
+          <div class="card-stats">
+            <span class="stat-pill hp">❤️ ${fmtNum(hp)}</span>
+            <span class="stat-pill exp">⭐ ${fmtNum(exp)}</span>
+            ${m.atk ? `<span class="stat-pill">⚔️ ${m.atk}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="badge-row">
+        ${isBoss ? '<span class="badge badge-boss">BOSS</span>' : ''}
+        ${isAggro ? '<span class="badge badge-aggro">主动</span>' : ''}
+        ${mapNames ? `<span class="badge badge-map">${mapNames}</span>` : ''}
+        ${drops.length > 0 ? `<span class="badge badge-drop">🎒 ${drops.length}件</span>` : ''}
+      </div>
+      ${dropPreviews.length > 0 ? `
+      <div class="drop-preview-row">
+        ${dropPreviews.map(d => `<img src="${itemImg(d.id)}" title="${d.cn_name || ''}" loading="lazy" onerror="this.style.display='none'">`).join('')}
+        ${drops.length > 6 ? `<span style="font-size:11px;color:var(--text2);align-self:center">+${drops.length - 6}</span>` : ''}
+      </div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Collect area list for chips
+  const areaCounts = {};
+  MONSTERS.forEach(m => {
+    (m._areas || []).forEach(a => {
+      if (a && a !== '未知') areaCounts[a] = (areaCounts[a] || 0) + 1;
+    });
+  });
+  // 金银岛 sub-towns
+  const vtTowns = ['彩虹村','明珠港','射手村','魔法密林','勇士部落','废弃都市','林中之城','黄金海岸'];
+  const hasVic = vtTowns.some(t => areaCounts[t]) || areaCounts['金银岛'];
+  // Sorted: 金银岛 first, then by count
+  const areaList = [];
+  if (hasVic) areaList.push('金银岛');
+  for (const [a, c] of Object.entries(areaCounts).sort((a,b) => b[1]-a[1])) {
+    if (!vtTowns.includes(a) && a !== '金银岛') areaList.push(a);
+  }
+
+  document.getElementById('content').innerHTML = `
+    <div class="town-chips" style="margin-bottom:10px">
+      <span class="town-chip ${!mAreaFilter ? 'active' : ''}" onclick="mAreaFilter='';render()">全部</span>
+      ${areaList.map(a => `<span class="town-chip ${mAreaFilter===a ? 'active' : ''}" onclick="mAreaFilter='${a}';render()">${a}</span>`).join('')}
+    </div>
+    <div class="filters">
+      <span class="filter-tag ${mOnlyBoss ? 'active' : ''}" onclick="mOnlyBoss=!mOnlyBoss;render()">👑 BOSS</span>
+      <span style="font-size:13px;color:var(--text2)">等级:</span>
+      <input type="number" id="levelMin" placeholder="最低" value="${mLevelMin}" onchange="mLevelMin=this.value;render()">
+      <span style="color:var(--text2)">-</span>
+      <input type="number" id="levelMax" placeholder="最高" value="${mLevelMax}" onchange="mLevelMax=this.value;render()">
+      ${(mLevelMin || mLevelMax || mOnlyBoss) ? `<span class="filter-tag" onclick="mLevelMin='';mLevelMax='';mOnlyBoss=false;mAreaFilter='';render()">清除筛选</span>` : ''}
+    </div>
+    <div class="result-count">共 ${filtered.length} 只怪物 ${q ? `(搜索: "${q}")` : ''}</div>
+    <div class="grid">${html || '<div class="empty-state"><div class="icon">🔍</div>未找到匹配的怪物</div>'}</div>
+  `;
+}
+
+function fmtNum(n) {
+  const num = parseInt(String(n).replace(/[^0-9]/g, ''));
+  if (!num) return String(n);
+  if (num >= 10000) return (num/10000).toFixed(1) + '万';
+  return num.toLocaleString();
+}
+
+// ===== MAPS =====
+let mTownFilter = '';
+
+function renderMaps(q) {
+  let filtered = MAPS;
+  if (mTownFilter) filtered = filtered.filter(m => m.town === mTownFilter);
+  if (q) {
+    const ql = q.toLowerCase();
+    filtered = filtered.filter(m => 
+      (m.cn_name || '').toLowerCase().includes(ql) ||
+      (m.tw_name || '').toLowerCase().includes(ql) ||
+      (m.en_name || '').toLowerCase().includes(ql) ||
+      String(m.id).includes(ql) ||
+      (m.town || '').toLowerCase().includes(ql) ||
+      (m.area || '').toLowerCase().includes(ql)
+    );
+  }
+
+  const html = filtered.map(m => {
+    const mons = (m.monsters || []).slice(0, 3);
+    return `
+    <div class="card" onclick="showDetail('map','${m.id}')">
+      <div class="card-header-row">
+        <img class="card-thumb map-thumb" src="${mapImg(m.id)}" loading="lazy" onerror="this.closest('.card').remove()" alt="">
+        <div class="card-info">
+          <div class="card-name">${m.cn_name || '未知'}</div>
+          <div class="card-sub">${m.en_name || ''} · ${m.town || ''} · ${m.area || ''}</div>
+          <div class="card-stats">
+            ${m.spawn_rate ? `<span class="stat-pill">🔄 ${m.spawn_rate}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${mons.length ? `<div class="badge-row">${mons.map(x => `<span class="badge badge-map">${x.cn_name || ''} Lv.${x.level} (${x.spawn_count}只)</span>`).join('')}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('content').innerHTML = `
+    <div class="town-chips">
+      <span class="town-chip ${!mTownFilter ? 'active' : ''}" onclick="mTownFilter='';render()">全部</span>
+      ${allTowns.map(t => `<span class="town-chip ${mTownFilter===t ? 'active' : ''}" onclick="mTownFilter='${t}';render()">${t}</span>`).join('')}
+    </div>
+    <div class="result-count">共 ${filtered.length} 张地图 ${mTownFilter ? `(${mTownFilter})` : ''}</div>
+    <div class="grid">${html || '<div class="empty-state"><div class="icon">🔍</div>未找到匹配的地图</div>'}</div>
+  `;
+}
+
+// ===== ITEMS =====
+function renderItems(q) {
+  let filtered = ITEMS;
+  if (q) {
+    const ql = q.toLowerCase();
+    filtered = ITEMS.filter(i => 
+      (i.name || '').toLowerCase().includes(ql) ||
+      String(i.id).includes(ql) ||
+      (i.category || '').toLowerCase().includes(ql) ||
+      (i.description || '').toLowerCase().includes(ql)
+    );
+  }
+  
+  const cats = [...new Set(filtered.map(i => i.category).filter(Boolean))].sort();
+  
+  const html = filtered.slice(0, 300).map(i => {
+    const cnName = i.name?.split('/')[0] || '未知';
+    const stats = i.stats || {};
+    const statStr = Object.entries(stats).filter(([k,v]) => v && k.startsWith('inc')).slice(0,3)
+      .map(([k,v]) => `<span class="stat-pill">${k.replace('inc','')}+${v}</span>`).join('');
+    return `
+    <div class="card" onclick="showDetail('item','${i.id}')">
+      <div class="card-header-row">
+        <img class="card-thumb" src="${itemImg(i.id)}" loading="lazy" onerror="this.style.display='none'" alt="">
+        <div class="card-info">
+          <div class="card-name">${cnName}</div>
+          <div class="card-sub">${i.category || ''} · ${i.sub_category || ''}</div>
+          ${statStr ? `<div class="card-stats">${statStr}</div>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('content').innerHTML = `
+    <div class="result-count">共 ${filtered.length} 件物品${filtered.length > 300 ? ' (显示前300件，请搜索缩小范围)' : ''}</div>
+    <div class="grid">${html || '<div class="empty-state"><div class="icon">🔍</div>未找到匹配的物品</div>'}</div>
+  `;
+}
+
+// ===== NAVIGATE =====
+let navFrom = null, navTo = null;
+
+function renderNavigate() {
+  const towns = MAPS.filter(m => m.town && (m.monsters || []).length === 0);
+  const allMaps = MAPS.filter(m => (m.monsters || []).length > 0);
+  
+  document.getElementById('content').innerHTML = `
+    <div class="detail-panel" style="position:static;animation:none">
+      <h2 style="margin-bottom:16px">🗺️ 地图导航</h2>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin:16px 0">
+        <div style="flex:1;min-width:200px">
+          <label style="font-size:13px;color:var(--text2)">出发点</label>
+          <input list="fromList" id="navFromInput" placeholder="搜索或选择出发地..." style="width:100%;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px" onchange="navFrom=resolveMapId(this.value)" oninput="updateNavDatalist('fromList','fromOptions',this.value)">
+          <datalist id="fromList">${towns.map(m => `<option data-mapid="${m.id}" value="${m.cn_name || '?'} · ${m.town || ''}">`).join('')}</datalist>
+          <div id="fromOptions" style="display:none"></div>
+        </div>
+        <div style="font-size:24px;color:var(--accent);padding-bottom:4px">→</div>
+        <div style="flex:1;min-width:200px">
+          <label style="font-size:13px;color:var(--text2)">目的地</label>
+          <input list="toList" id="navToInput" placeholder="搜索或选择目的地..." style="width:100%;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px" onchange="navTo=resolveMapId(this.value)" oninput="updateNavDatalist('toList','toOptions',this.value)">
+          <datalist id="toList">${allMaps.slice(0, 300).map(m => `<option data-mapid="${m.id}" value="${m.cn_name || '?'} · ${m.town || ''}">`).join('')}</datalist>
+          <div id="toOptions" style="display:none"></div>
+        </div>
+        <button onclick="findRoute()" style="padding:8px 24px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600">开始导航</button>
+      </div>
+      <div id="routeResult"></div>
+    </div>
+  `;
+}
+
+function resolveMapId(text) {
+  if (!text) return '';
+  const m = MAPS.find(m => `${m.cn_name || '?'} · ${m.town || ''}` === text);
+  return m ? m.id : '';
+}
+
+function updateNavDatalist(listId, optId, q) {
+  const datalist = document.getElementById(listId);
+  if (!datalist) return;
+  const isFrom = listId === 'fromList';
+  
+  if (!q || q.length < 1) {
+    datalist.innerHTML = (isFrom 
+      ? MAPS.filter(m => m.town && (m.monsters || []).length === 0)
+      : MAPS.filter(m => (m.monsters || []).length > 0))
+      .slice(0, 300).map(m => `<option value="${m.cn_name || '?'} · ${m.town || ''}">`).join('');
+    return;
+  }
+  
+  const ql = q.toLowerCase();
+  const matches = MAPS.filter(m => {
+    if ((m.cn_name || '').toLowerCase().includes(ql)) return true;
+    if ((m.town || '').toLowerCase().includes(ql)) return true;
+    if (String(m.id).includes(ql)) return true;
+    // Also search monsters on this map
+    if ((m.monsters || []).some(mo => 
+      (mo.cn_name || '').toLowerCase().includes(ql) ||
+      (mo.en_name || '').toLowerCase().includes(ql)
+    )) return true;
+    return false;
+  }).slice(0, 50);
+  
+  datalist.innerHTML = matches.map(m => 
+    `<option value="${m.cn_name || '?'} · ${m.town || ''}">`
+  ).join('');
+  
+  // Match by input value to set mapid
+  const match = MAPS.find(m => `${m.cn_name || '?'} · ${m.town || ''}` === q);
+  if (isFrom) navFrom = match ? match.id : '';
+  else navTo = match ? match.id : '';
+}
+
+function findRoute() {
+  const from = navFrom, to = navTo;
+  if (!from || !to) { document.getElementById('routeResult').innerHTML = '<div class="empty-state">请选择出发地和目的地</div>'; return; }
+  
+  const graph = {};
+  for (const m of MAPS) {
+    graph[m.id] = graph[m.id] || [];
+    for (const eid of (m.exits || [])) {
+      graph[m.id].push(String(eid));
+      graph[String(eid)] = graph[String(eid)] || [];
+      if (!graph[String(eid)].includes(m.id)) graph[String(eid)].push(m.id);
+    }
+  }
+  
+  const visited = new Set([from]), parent = {[from]: null}, queue = [from]; let found = false;
+  while (queue.length) {
+    const cur = queue.shift();
+    if (cur === to) { found = true; break; }
+    for (const n of (graph[cur] || [])) { if (!visited.has(n)) { visited.add(n); parent[n] = cur; queue.push(n); } }
+  }
+  
+  if (!found) { document.getElementById('routeResult').innerHTML = '<div class="empty-state">⚠️ 未找到可行路线（可能出发点与目的地不在连通区域内）</div>'; return; }
+  
+  const path = []; let c = to;
+  while (c) { path.unshift(c); c = parent[c]; }
+  
+  const steps = path.map((id, i) => {
+    const m = MAP_BY_ID[id] || {};
+    const name = m.cn_name || `#${id}`;
+    const mons = (m.monsters || []).slice(0, 3).map(x => x.cn_name).join(', ');
+    return `<div class="info-item" style="margin:4px 0;border-left:3px solid var(--accent)">
+      <strong>${i+1}.</strong> ${name} ${m.town ? '🏠' : ''}
+      ${mons ? `<div style="font-size:11px;color:var(--text2)">🐾 ${mons}</div>` : ''}
+      ${i < path.length-1 ? ' →' : ' 🎯'}
+    </div>`;
+  }).join('');
+  
+  document.getElementById('routeResult').innerHTML = `
+    <div class="section" style="margin-top:16px"><h3>📋 路线 (${path.length-1} 步)</h3>${steps}
+    <div style="margin-top:8px;color:var(--text2);font-size:12px">⚠️ 路线基于地图ID推算，仅供参考。以游戏内实际传送口为准。</div></div>`;
+}
+
+// ===== DETAIL VIEWS =====
+function showDetail(type, id) {
+  let data;
+  if (type === 'monster') data = MONSTER_BY_ID[id];
+  else if (type === 'map') data = MAP_BY_ID[id];
+  else if (type === 'item') {
+    // Try our ID first, then reverse mapping (mxdzlk → our)
+    data = ITEM_BY_ID[id];
+    if (!data) {
+      const revId = ITEM_ID_MAP_REV[String(id)];
+      if (revId) data = ITEM_BY_ID[revId];
+    }
+  }
+  if (!data) return;
+  currentDetail = {type, data};
+  renderDetail();
+}
+
+function closeDetail() { currentDetail = null; render(); }
+
+function renderDetail() {
+  if (!currentDetail) return;
+  const {type, data} = currentDetail;
+  if (type === 'monster') renderMonsterDetail(data);
+  else if (type === 'map') renderMapDetail(data);
+  else if (type === 'item') renderItemDetail(data);
+}
+
+function renderMonsterDetail(m) {
+  const lv = m.level || '?';
+  const info = [
+    ['等级', `Lv.${lv}`], ['HP', fmtNum(m.hp)], ['MP', fmtNum(m.mp || '0')],
+    ['经验', fmtNum(m.exp)], ['金币', m.meso || '-'],
+    ['物理攻击', m.atk || '-'], ['魔法攻击', m.matk || '-'],
+    ['物理防御', m.def || '-'], ['魔法防御', m.mdef || '-'],
+    ['命中率', m.acc || '-'], ['回避率', m.avoid || '-'],
+    ['速度', m.speed || '-'], ['击退', m.knockback || '-'],
+  ];
+  if (m.hp_recovery) info.push(['HP恢复/10s', m.hp_recovery]);
+  if (m.mp_recovery) info.push(['MP恢复/10s', m.mp_recovery]);
+  
+  const tags = m.tags || [];
+  const maps = m.map_locations || [];
+  const drops = m.drops || [];
+  
+  // Group drops by category
+  const dropByCat = {};
+  for (const d of drops) {
+    const cat = d.category || '其他';
+    if (!dropByCat[cat]) dropByCat[cat] = [];
+    dropByCat[cat].push(d);
+  }
+  
+  document.getElementById('content').innerHTML = `
+    <div class="detail-overlay" onclick="if(event.target===this)closeDetail()">
+    <div class="detail-panel">
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+      <div class="detail-header">
+        <img class="detail-thumb" src="${mobImg(m.id)}" onerror="this.style.display='none'" alt="">
+        <div>
+          <div class="detail-title">${m.cn_name || '未知怪物'} <span style="font-size:14px;color:var(--text2)">#${m.id}</span></div>
+          <div class="detail-sub">${m.tw_name || ''} / ${m.en_name || ''}</div>
+          <div class="detail-tags">
+            ${tags.includes('BOSS') ? '<span class="badge badge-boss">BOSS</span>' : ''}
+            ${tags.includes('主动攻击') ? '<span class="badge badge-aggro">主动攻击</span>' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="info-grid">${info.map(([k,v]) => `<div class="info-item"><div class="ilabel">${k}</div><div class="ivalue">${v}</div></div>`).join('')}</div>
+      
+      ${maps.length > 0 ? `
+      <div class="section">
+        <h3>📍 出没地图 (${maps.length})</h3>
+        <table class="link-table">
+          <tr><th>地图名</th><th>数量</th></tr>
+          ${maps.map(x => `<tr onclick="showDetail('map','${x.id}')"><td>${x.cn_name || x.name || '?'}</td><td>${x.spawn_count || '?'} 只</td></tr>`).join('')}
+        </table>
+      </div>` : ''}
+      
+      ${Object.keys(dropByCat).length > 0 ? `
+      <div class="section">
+        <h3>🎒 掉落物品 (${drops.length})</h3>
+        ${Object.entries(dropByCat).map(([cat, items]) => `
+          <div style="margin-bottom:8px">
+            <span style="font-size:12px;font-weight:600;color:var(--text2)">${cat} (${items.length})</span>
+            <div class="drop-list">
+              ${items.map(d => `
+                <span class="drop-item" onclick="showDetail('item','${d.id}')">
+                  <img src="${itemImg(d.id)}" onerror="this.style.display='none'" alt="">
+                  <span class="drop-name">${d.cn_name || '?'}</span>
+                  ${d.en_name ? `<span class="drop-en">${d.en_name}</span>` : ''}
+                  <span class="drop-cat-badge">${cat}</span>
+                </span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>` : ''}
+      
+      ${(m.quests || []).length > 0 ? `
+      <div class="section">
+        <h3>📋 关联任务 (${m.quests.length})</h3>
+        ${m.quests.map(q => `<div class="info-item" style="margin:4px 0">${q.name}</div>`).join('')}
+      </div>` : ''}
+    </div></div>
+  `;
+}
+
+function renderMapDetail(m) {
+  const mons = m.monsters || [];
+  const npcs = m.npcs || [];
+  const hint = ENTRANCE_HINTS[m.id];
+  
+  document.getElementById('content').innerHTML = `
+    <div class="detail-overlay" onclick="if(event.target===this)closeDetail()">
+    <div class="detail-panel">
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+      <div class="detail-header">
+        <img class="detail-thumb" src="${mapImg(m.id)}" onerror="this.style.display='none'" alt="" style="width:120px">
+        <div>
+          <div class="detail-title">${m.cn_name || '未知'} <span style="font-size:14px;color:var(--text2)">#${m.id}</span></div>
+          <div class="detail-sub">${m.tw_name || ''} / ${m.en_name || ''}</div>
+          <div class="detail-sub">${m.town || ''} · ${m.area || ''} ${m.spawn_rate ? '· 🔄 ' + m.spawn_rate : ''}</div>
+          <button onclick="currentDetail=null;currentTab='navigate';renderNavigate();setTimeout(()=>{navTo='${m.id}';document.getElementById('navTo').value='${m.id}';document.getElementById('navToSearch').value='${m.cn_name||''}'},100)" style="margin-top:8px;padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">🧭 导航到这里</button>
+        </div>
+      </div>
+      ${hint ? `
+      <div style="margin:12px 0;padding:12px 16px;background:var(--bg);border:1px dashed var(--accent);border-radius:8px">
+        <div style="color:var(--accent);font-weight:600;margin-bottom:4px">🔍 隐藏地图入口</div>
+        <div style="font-size:13px">从 <strong>「${hint.parent_map_name}」</strong>进入：${hint.description}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px">
+          ${hint.method==='press_up' ? '⬆️ 按↑键' : hint.method==='jump_down' ? '⬇️ 跳下' : hint.method==='npc' ? '💬 NPC对话' : '🚶 步行进入'} · ${hint.position}
+        </div>
+        ${hint.has_image && hint.image ? `<img src="${hint.image}" style="max-width:100%;border-radius:6px;margin-top:8px;border:1px solid var(--border)" alt="">` : ''}
+      </div>` : ''}
+      
+      ${mons.length > 0 ? `
+      <div class="section">
+        <h3>🐾 出没怪物 (${mons.length})</h3>
+        <table class="link-table">
+          <tr><th>名称</th><th>等级</th><th>HP</th><th>EXP</th><th>数量</th></tr>
+          ${mons.map(x => `<tr onclick="showDetail('monster','${x.id}')">
+            <td>${x.cn_name || '?'} <span style="font-size:11px;color:var(--text2)">${x.en_name || ''}</span></td>
+            <td>Lv.${x.level}</td><td>${fmtNum(x.hp)}</td><td>${fmtNum(x.exp)}</td><td>${x.spawn_count}只</td>
+          </tr>`).join('')}
+        </table>
+      </div>` : '<div class="section"><h3>🐾 出没怪物</h3><div style="color:var(--text2)">此地图无怪物</div></div>'}
+      
+      ${npcs.length > 0 ? `
+      <div class="section">
+        <h3>💬 NPC (${npcs.length})</h3>
+        <div class="drop-list">${npcs.map(n => `<span class="drop-item">${n.name || '?'}</span>`).join('')}</div>
+      </div>` : ''}
+      
+      ${(m.exits || []).length > 0 ? `
+      <div class="section">
+        <h3>🚪 可通往 (${m.exits.length})</h3>
+        <table class="link-table">
+          <tr><th>地图</th><th>区域</th></tr>
+          ${m.exits.map(eid => { const em = MAP_BY_ID[eid]; return em ? `<tr onclick="showDetail('map','${eid}')"><td>${em.cn_name || '?'}</td><td>${em.town || ''}</td></tr>` : ''; }).join('')}
+        </table>
+      </div>` : ''}
+    </div></div>
+  `;
+}
+
+function renderItemDetail(i) {
+  const cnName = i.name?.split('/')[0] || '未知';
+  const enName = i.name?.includes('/') ? i.name.split('/')[1]?.trim() : '';
+  const stats = i.stats || {};
+  const statEntries = Object.entries(stats).filter(([k,v]) => v != null && v !== 0);
+  
+  // Find which monsters drop this item
+  // Monster drops use mxdzlk IDs which may differ from our item IDs
+  const ourId = String(i.id);
+  const mxId = ITEM_ID_MAP[ourId]; // mapped mxdzlk ID, if any
+  const droppedBy = MONSTERS.filter(m => 
+    (m.drops || []).some(d => {
+      if (mxId) return d.id === mxId;  // use specific mxdzlk ID
+      // Raw ID match only if the mxdzlk ID isn't mapped to a different item
+      if (d.id === ourId && !ITEM_ID_MAP_REV[d.id]) return true;
+      // Reverse: does this mxdzlk drop ID map to our item?
+      return ITEM_ID_MAP_REV[d.id] === ourId;
+    })
+  );
+  
+  document.getElementById('content').innerHTML = `
+    <div class="detail-overlay" onclick="if(event.target===this)closeDetail()">
+    <div class="detail-panel">
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+      <div class="detail-header">
+        <img class="detail-thumb" src="${itemImg(i.id)}" onerror="this.style.display='none'" alt="">
+        <div>
+          <div class="detail-title">${cnName} <span style="font-size:14px;color:var(--text2)">#${i.id}</span></div>
+          <div class="detail-sub">${enName} · ${i.category || ''} · ${i.sub_category || ''} ${i.gender || ''}</div>
+        </div>
+      </div>
+      ${i.description ? `<div style="color:var(--text2);margin:8px 0">${i.description}</div>` : ''}
+      ${statEntries.length > 0 ? `
+      <div class="info-grid">
+        ${statEntries.map(([k,v]) => {
+          const label = k.replace('inc','').replace('req','需要').replace(/([A-Z])/g,' $1').trim();
+          return `<div class="info-item"><div class="ilabel">${label}</div><div class="ivalue">${v}</div></div>`;
+        }).join('')}
+      </div>` : ''}
+      ${i.price ? `<div class="info-item" style="margin:8px 0"><div class="ilabel">价格</div><div class="ivalue">${i.price.toLocaleString()} 金币</div></div>` : ''}
+      
+      ${droppedBy.length > 0 ? `
+      <div class="section">
+        <h3>🐾 掉落此物品的怪物 (${droppedBy.length})</h3>
+        <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+          ${droppedBy.map(m => `
+          <div class="card" onclick="closeDetail();setTimeout(()=>showDetail('monster','${m.id}'),100)">
+            <div class="card-header-row">
+              <img class="card-thumb" src="${mobImg(m.id)}" loading="lazy" onerror="this.style.display='none'" alt="">
+              <div class="card-info">
+                <div class="card-name">${m.cn_name || '?'} <span style="font-size:12px;color:var(--text2)">Lv.${m.level||'?'}</span></div>
+                <div class="card-sub">HP ${fmtNum(m.hp)} ${(m.tags||[]).includes('BOSS') ? '👑' : ''}</div>
+              </div>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>` : ''}
+    </div></div>
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

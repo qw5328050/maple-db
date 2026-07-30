@@ -1,0 +1,191 @@
+{
+  "entrances": [
+    {
+      "parent_map_id": 104010000,
+      "parent_map_name": "三叉路",
+      "hidden_map_id": 104010001,
+      "hidden_map_name": "猪的海岸",
+      "image": "",
+      "description": "三叉路地图左下角，走到绳梯处按↑键爬下去",
+      "method": "press_up",
+      "position": "左下角绳梯",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 104010000,
+      "parent_map_name": "三叉路",
+      "hidden_map_id": 104010002,
+      "hidden_map_name": "海岸打猎场",
+      "image": "",
+      "description": "三叉路地图底部标志牌处进入",
+      "method": "press_up",
+      "position": "底部标志牌",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 101020002,
+      "parent_map_name": "北部森林训练场Ⅰ",
+      "hidden_map_id": 107000401,
+      "hidden_map_name": "猴子沼泽地Ⅰ",
+      "image": "",
+      "description": "魔法密林北部森林训练场Ⅰ右侧树洞里进入，全是20-25级猴子，有安全的卡位点",
+      "method": "press_up",
+      "position": "右侧树洞",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 107000401,
+      "parent_map_name": "猴子沼泽地Ⅰ",
+      "hidden_map_id": 107000402,
+      "hidden_map_name": "猴子沼泽地Ⅱ",
+      "image": "",
+      "description": "猴子沼泽地Ⅰ地图右侧进入",
+      "method": "walk",
+      "position": "右侧传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 107000402,
+      "parent_map_name": "猴子沼泽地Ⅱ",
+      "hidden_map_id": 107000403,
+      "hidden_map_name": "猴子沼泽地Ⅲ",
+      "image": "",
+      "description": "猴子沼泽地Ⅱ地图右侧进入",
+      "method": "walk",
+      "position": "右侧传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 103000000,
+      "parent_map_name": "废弃都市",
+      "hidden_map_id": 910400000,
+      "hidden_map_name": "危险的情报商店",
+      "image": "",
+      "description": "隐藏在废弃都市的一张地图中，寻找隐藏入口",
+      "method": "press_up",
+      "position": "废弃都市隐藏入口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 220060100,
+      "parent_map_name": "扭曲的时间<2>",
+      "hidden_map_id": 220060200,
+      "hidden_map_name": "扭曲的时间<3>",
+      "image": "",
+      "description": "玩具城最下层扭曲的时间通道，100-120级高效练级地图",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 220060200,
+      "parent_map_name": "扭曲的时间<3>",
+      "hidden_map_id": 220060300,
+      "hidden_map_name": "扭曲的时间<4>",
+      "image": "",
+      "description": "玩具城最下层扭曲的时间通道，继续深入",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 240030100,
+      "parent_map_name": "龙林1",
+      "hidden_map_id": 240030103,
+      "hidden_map_name": "被隐藏的龙庙1",
+      "image": "",
+      "description": "神木村龙林1地图中寻找隐藏入口进入龙庙",
+      "method": "press_up",
+      "position": "隐藏入口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 240030103,
+      "parent_map_name": "被隐藏的龙庙1",
+      "hidden_map_id": 240030104,
+      "hidden_map_name": "被隐藏的龙庙2",
+      "image": "",
+      "description": "龙庙1深处传送口进入龙庙2",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 260010400,
+      "parent_map_name": "炽热的沙漠",
+      "hidden_map_id": 260010401,
+      "hidden_map_name": "岩岸",
+      "image": "",
+      "description": "阿里安特炽热的沙漠地图中寻找隐藏入口进入岩岸",
+      "method": "press_up",
+      "position": "隐藏入口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 260010400,
+      "parent_map_name": "炽热的沙漠",
+      "hidden_map_id": 260010402,
+      "hidden_map_name": "盗贼之窝",
+      "image": "",
+      "description": "阿里安特炽热的沙漠地图中寻找隐藏入口进入盗贼之窝",
+      "method": "press_up",
+      "position": "隐藏入口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 251010100,
+      "parent_map_name": "五十年药草地",
+      "hidden_map_id": 251010101,
+      "hidden_map_name": "六十年药草地",
+      "image": "",
+      "description": "五十年药草地地图最上面一排，右边进入六十年药草地",
+      "method": "press_up",
+      "position": "最上面右边",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 251010100,
+      "parent_map_name": "五十年药草地",
+      "hidden_map_id": 251010102,
+      "hidden_map_name": "八十年药草地",
+      "image": "",
+      "description": "五十年药草地地图最上面一排，左边进入八十年药草地",
+      "method": "press_up",
+      "position": "最上面左边",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 922020200,
+      "parent_map_name": "隐藏的露台",
+      "hidden_map_id": 922020300,
+      "hidden_map_name": "时间塔的起源",
+      "image": "",
+      "description": "时间神殿区域，隐藏的露台深处进入时间塔的起源",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 104010002,
+      "parent_map_name": "海岸打猎场",
+      "hidden_map_id": 104010001,
+      "hidden_map_name": "猪的海岸",
+      "image": "",
+      "description": "海岸打猎场和猪的海岸互通",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    },
+    {
+      "parent_map_id": 104010001,
+      "parent_map_name": "猪的海岸",
+      "hidden_map_id": 104010002,
+      "hidden_map_name": "海岸打猎场",
+      "image": "",
+      "description": "猪的海岸和海岸打猎场互通",
+      "method": "walk",
+      "position": "传送口",
+      "has_image": false
+    }
+  ]
+}
