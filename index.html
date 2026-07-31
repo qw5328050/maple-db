@@ -915,31 +915,49 @@ function calcScore(item) {
   const incMDD = parseInt(s.incMDD) || 0;
   const tuc = parseInt(s.tuc) || 0;
   const reqLevel = parseInt(s.reqLevel) || 1;
+  const reqJob = parseInt(s.reqJob) || 0;
 
-  // Exclude GM items (999 all stats)
+  // Exclude GM items (reqLevel=0 or 999 all stats)
+  if (reqLevel === 0) return -1;
   if (incSTR >= 900 && incDEX >= 900 && incINT >= 900 && incLUK >= 900) return -1;
 
   const isWeapon = item.sub_category === 'Weapon';
-  // Weapon: attack weighted heavily. Armor: stats + slots matter more.
-  let score;
+  // Base stat power
+  let base;
   if (isWeapon) {
-    score = incPAD * 15 + incMAD * 8 + (incSTR + incDEX + incINT + incLUK) * 3 + tuc * 25;
+    base = incPAD * 12 + incMAD * 8 + (incSTR + incDEX + incINT + incLUK) * 3;
   } else {
-    score = incPAD * 5 + incMAD * 3 + (incSTR + incDEX + incINT + incLUK) * 4
-      + incACC * 3 + incEVA * 3 + incSpeed + incJump * 2 + incPDD / 2 + incMDD / 2 + tuc * 15;
+    base = incPAD * 5 + incMAD * 3 + (incSTR + incDEX + incINT + incLUK) * 4
+      + incACC * 3 + incEVA * 3 + Math.floor((incPDD + incMDD) / 3)
+      + incSpeed + incJump * 2;
   }
-  // Higher level gear harder to get
-  score += reqLevel * 0.5;
+
+  // Level factor: lower level = bonus, capped at 3x
+  const lv = Math.max(reqLevel, 1);
+  const levelFactor = Math.min(3.0, 1.0 + 15.0 / (lv + 5));
+
+  // Slot value — upgrade potential
+  const slotVal = tuc * 30;
+
+  // All-class + high slot bonus (锅盖, 工地手套, 桑拿服 etc.)
+  const allClass = reqJob === 0;
+  let classBonus = 1.0;
+  if (allClass && tuc >= 5) classBonus = 1.2;
+  if (allClass && tuc >= 10) classBonus = 1.3;
+
+  const score = (base * levelFactor + slotVal) * classBonus;
   return score;
 }
 
 function renderValue(q) {
   const equipment = ITEMS.filter(i => {
-    // Only equipment with real stats
     const s = i.stats || {};
-    const hasStats = s.incPAD || s.incMAD || s.incSTR || s.incDEX || s.incINT || s.incLUK || s.incACC || s.incEVA;
-    if (!hasStats) return false;
+    // Include any equipment with stats, defense, or upgrade slots
+    const hasValue = s.incPAD || s.incMAD || s.incSTR || s.incDEX || s.incINT || s.incLUK
+      || s.incACC || s.incEVA || s.incPDD || s.incMDD || s.incSpeed || s.incJump;
+    if (!hasValue && !s.tuc) return false;
     // Filter GM items
+    if (parseInt(s.reqLevel) === 0) return false;
     if (parseInt(s.incSTR)>=900 && parseInt(s.incDEX)>=900 && parseInt(s.incINT)>=900 && parseInt(s.incLUK)>=900) return false;
     return true;
   });
