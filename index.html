@@ -222,6 +222,7 @@ main { max-width: 1400px; margin: 0 auto; padding: 16px; }
     <button data-tab="maps">地图图鉴</button>
     <button data-tab="items">物品图鉴</button>
     <button data-tab="navigate">🗺️ 地图导航</button>
+    <button data-tab="value">💰 装备估价</button>
   </nav>
   <div class="search-box">
     <input type="text" id="search" placeholder="搜索怪物、物品、卷轴...">
@@ -245,7 +246,20 @@ const IMG_MAP = 'https://static.mxdzlk.com/images/map/';
 const IMG_ITEM = 'https://static.mxdzlk.com/CMS079/images/item/';
 
 function mobImg(id) { return IMG_MOB + id + '/preview.png'; }
-function mapImg(id) { return IMG_MAP + id + '.png'; }
+function mapImg(id) {
+  return `images/maps/${id}.png`; // 本地大图优先，onerror 时 fallback
+}
+function mapImgCdn(id) { return IMG_MAP + id + '.png'; }
+function mapImgFallback(img) {
+  if (img.src.includes('images/maps/')) {
+    const id = img.src.split('/').pop().replace('.png','');
+    img.src = IMG_MAP + id + '.png';
+  } else {
+    const card = img.closest('.card');
+    if (card) card.remove();
+    else img.style.display = 'none';
+  }
+}
 function itemImg(id) {
   const realId = ITEM_ID_MAP[String(id)] || id;
   return IMG_ITEM + realId + '/preview.png';
@@ -302,7 +316,7 @@ async function init() {
       currentDetail = null;
       document.getElementById('search').value = '';
       // Update placeholder per tab
-      const ph = {monsters:'搜索怪物、物品、卷轴...', maps:'搜索地图...', items:'搜索物品...', navigate:''};
+      const ph = {monsters:'搜索怪物、物品、卷轴...', maps:'搜索地图...', items:'搜索物品...', navigate:'', value:'搜索装备名称...'};
       document.getElementById('search').placeholder = ph[currentTab] || '';
       render();
     }));
@@ -330,6 +344,7 @@ function render() {
     case 'maps': renderMaps(q); break;
     case 'items': renderItems(q); break;
     case 'navigate': renderNavigate(); break;
+    case 'value': renderValue(q); break;
   }
 }
 
@@ -463,7 +478,7 @@ function renderMaps(q) {
     return `
     <div class="card" onclick="showDetail('map','${m.id}')">
       <div class="card-header-row">
-        <img class="card-thumb map-thumb" src="${mapImg(m.id)}" loading="lazy" onerror="this.closest('.card').remove()" alt="">
+        <img class="card-thumb map-thumb" src="${mapImg(m.id)}" loading="lazy" onerror="mapImgFallback(this)" alt="">
         <div class="card-info">
           <div class="card-name">${m.cn_name || '未知'}</div>
           <div class="card-sub">${m.en_name || ''} · ${m.town || ''} · ${m.area || ''}</div>
@@ -628,10 +643,19 @@ function findRoute() {
     const m = MAP_BY_ID[id] || {};
     const name = m.cn_name || `#${id}`;
     const mons = (m.monsters || []).slice(0, 3).map(x => x.cn_name).join(', ');
-    return `<div class="info-item" style="margin:4px 0;border-left:3px solid var(--accent)">
-      <strong>${i+1}.</strong> ${name} ${m.town ? '🏠' : ''}
+    const hint = ENTRANCE_HINTS[id];
+    const hintHtml = hint ? `
+      <div style="margin-top:6px;padding:8px 10px;background:rgba(240,136,62,0.08);border:1px dashed var(--accent);border-radius:6px;font-size:12px">
+        <span style="color:var(--accent);font-weight:600">🔍 隐藏入口</span>
+        <span style="color:var(--text2)">从 <strong>「${hint.parent_map_name}」</strong>：${hint.description}</span>
+        <span style="color:var(--text2);margin-left:6px">${hint.method==='press_up' ? '⬆️按↑' : hint.method==='jump_down' ? '⬇️跳下' : hint.method==='npc' ? '💬NPC' : '🚶步行'} · ${hint.position}</span>
+        ${hint.has_image && hint.image ? `<br><img src="${hint.image}" style="max-width:100%;max-height:200px;border-radius:4px;margin-top:6px;border:1px solid var(--border)" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
+      </div>` : '';
+    return `<div class="info-item" style="margin:8px 0;border-left:3px solid var(--accent)">
+      <strong>${i+1}.</strong> <a href="javascript:void(0)" onclick="currentTab='maps';showDetail('map','${id}')" style="color:var(--accent);text-decoration:underline;cursor:pointer" title="查看地图详情">${name}</a> ${m.town ? '🏠' : ''}
       ${mons ? `<div style="font-size:11px;color:var(--text2)">🐾 ${mons}</div>` : ''}
-      ${i < path.length-1 ? ' →' : ' 🎯'}
+      ${hintHtml}
+      ${i < path.length-1 ? '<div style="text-align:center;color:var(--text2);margin-top:4px">↓</div>' : ' 🎯'}
     </div>`;
   }).join('');
   
@@ -756,13 +780,13 @@ function renderMapDetail(m) {
     <div class="detail-overlay" onclick="if(event.target===this)closeDetail()">
     <div class="detail-panel">
       <button class="detail-close" onclick="closeDetail()">✕</button>
-      <div class="detail-header">
-        <img class="detail-thumb" src="${mapImg(m.id)}" onerror="this.style.display='none'" alt="" style="width:120px">
+      <div class="detail-header" style="flex-direction:column;align-items:stretch;gap:12px">
+        <img class="detail-thumb" src="${mapImg(m.id)}" onerror="mapImgFallback(this)" alt="" style="width:100%;max-height:500px;object-fit:contain;border-radius:8px;background:var(--bg);border:1px solid var(--border)">
         <div>
           <div class="detail-title">${m.cn_name || '未知'} <span style="font-size:14px;color:var(--text2)">#${m.id}</span></div>
           <div class="detail-sub">${m.tw_name || ''} / ${m.en_name || ''}</div>
           <div class="detail-sub">${m.town || ''} · ${m.area || ''} ${m.spawn_rate ? '· 🔄 ' + m.spawn_rate : ''}</div>
-          <button onclick="currentDetail=null;currentTab='navigate';renderNavigate();setTimeout(()=>{navTo='${m.id}';document.getElementById('navTo').value='${m.id}';document.getElementById('navToSearch').value='${m.cn_name||''}'},100)" style="margin-top:8px;padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">🧭 导航到这里</button>
+          <button onclick="currentDetail=null;currentTab='navigate';renderNavigate();setTimeout(()=>{navTo='${m.id}';document.getElementById('navToInput').value='${m.cn_name||''} · ${m.town||''}'},100)" style="margin-top:8px;padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">🧭 导航到这里</button>
         </div>
       </div>
       ${hint ? `
@@ -772,7 +796,7 @@ function renderMapDetail(m) {
         <div style="font-size:12px;color:var(--text2);margin-top:4px">
           ${hint.method==='press_up' ? '⬆️ 按↑键' : hint.method==='jump_down' ? '⬇️ 跳下' : hint.method==='npc' ? '💬 NPC对话' : '🚶 步行进入'} · ${hint.position}
         </div>
-        ${hint.has_image && hint.image ? `<img src="${hint.image}" style="max-width:100%;border-radius:6px;margin-top:8px;border:1px solid var(--border)" alt="">` : ''}
+        ${hint.image ? `<img src="${hint.image}" style="max-width:100%;border-radius:6px;margin-top:8px;border:1px solid var(--border)" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
       </div>` : ''}
       
       ${mons.length > 0 ? `
@@ -864,6 +888,168 @@ function renderItemDetail(i) {
       </div>` : ''}
     </div></div>
   `;
+}
+
+// ===== VALUE (装备估价) =====
+let vSortKey = '_score', vSortDir = -1, vTypeFilter = '';
+
+function sortValue(key) {
+  if (vSortKey === key) vSortDir = -vSortDir;
+  else { vSortKey = key; vSortDir = -1; }
+  render();
+}
+
+function calcScore(item) {
+  const s = item.stats || {};
+  const incPAD = parseInt(s.incPAD) || 0;
+  const incMAD = parseInt(s.incMAD) || 0;
+  const incSTR = parseInt(s.incSTR) || 0;
+  const incDEX = parseInt(s.incDEX) || 0;
+  const incINT = parseInt(s.incINT) || 0;
+  const incLUK = parseInt(s.incLUK) || 0;
+  const incACC = parseInt(s.incACC) || 0;
+  const incEVA = parseInt(s.incEVA) || 0;
+  const incSpeed = parseInt(s.incSpeed) || 0;
+  const incJump = parseInt(s.incJump) || 0;
+  const incPDD = parseInt(s.incPDD) || 0;
+  const incMDD = parseInt(s.incMDD) || 0;
+  const tuc = parseInt(s.tuc) || 0;
+  const reqLevel = parseInt(s.reqLevel) || 1;
+
+  // Exclude GM items (999 all stats)
+  if (incSTR >= 900 && incDEX >= 900 && incINT >= 900 && incLUK >= 900) return -1;
+
+  const isWeapon = item.sub_category === 'Weapon';
+  // Weapon: attack weighted heavily. Armor: stats + slots matter more.
+  let score;
+  if (isWeapon) {
+    score = incPAD * 15 + incMAD * 8 + (incSTR + incDEX + incINT + incLUK) * 3 + tuc * 25;
+  } else {
+    score = incPAD * 5 + incMAD * 3 + (incSTR + incDEX + incINT + incLUK) * 4
+      + incACC * 3 + incEVA * 3 + incSpeed + incJump * 2 + incPDD / 2 + incMDD / 2 + tuc * 15;
+  }
+  // Higher level gear harder to get
+  score += reqLevel * 0.5;
+  return score;
+}
+
+function renderValue(q) {
+  const equipment = ITEMS.filter(i => {
+    // Only equipment with real stats
+    const s = i.stats || {};
+    const hasStats = s.incPAD || s.incMAD || s.incSTR || s.incDEX || s.incINT || s.incLUK || s.incACC || s.incEVA;
+    if (!hasStats) return false;
+    // Filter GM items
+    if (parseInt(s.incSTR)>=900 && parseInt(s.incDEX)>=900 && parseInt(s.incINT)>=900 && parseInt(s.incLUK)>=900) return false;
+    return true;
+  });
+
+  // Score each item
+  const scored = equipment.map(i => {
+    const s = i.stats || {};
+    const score = calcScore(i);
+    return {
+      ...i,
+      _score: score,
+      _atk: parseInt(s.incPAD) || 0,
+      _matk: parseInt(s.incMAD) || 0,
+      _str: parseInt(s.incSTR) || 0,
+      _dex: parseInt(s.incDEX) || 0,
+      _int: parseInt(s.incINT) || 0,
+      _luk: parseInt(s.incLUK) || 0,
+      _tuc: parseInt(s.tuc) || 0,
+      _lv: parseInt(s.reqLevel) || 1,
+      _acc: parseInt(s.incACC) || 0,
+      _eva: parseInt(s.incEVA) || 0,
+      _pdd: parseInt(s.incPDD) || 0,
+      _mdd: parseInt(s.incMDD) || 0
+    };
+  });
+
+  // Filter by search
+  let filtered = scored;
+  if (q) {
+    const ql = q.toLowerCase();
+    filtered = filtered.filter(i => 
+      (i.name || '').toLowerCase().includes(ql) ||
+      (i.sub_category || '').toLowerCase().includes(ql) ||
+      String(i.id).includes(ql)
+    );
+  }
+
+  // Sort
+  filtered.sort((a, b) => {
+    let va = a[vSortKey] || 0, vb = b[vSortKey] || 0;
+    if (typeof va === 'string') return va.localeCompare(vb) * vSortDir;
+    return (va - vb) * vSortDir;
+  });
+
+  // Column headers
+  const sortIcon = (key) => {
+    if (vSortKey === key) return vSortDir === -1 ? ' ▼' : ' ▲';
+    return '';
+  };
+  const clickSort = (key) => `onclick="sortValue('${key}')"`;
+
+  const subCats = [...new Set(scored.map(i => i.sub_category).filter(Boolean))].sort();
+  const typeIcons = {Weapon:'⚔️', Hat:'🎩', Top:'👕', Bottom:'👖', Overall:'👘', Shoes:'👟', Glove:'🧤', Shield:'🛡️', Earring:'💎', Cape:'🧣'};
+
+  let html = '<div class="filters" style="margin-bottom:12px">';
+  html += `<span style="font-size:13px;color:var(--text2);margin-right:8px">类型:</span>`;
+  html += `<span class="filter-tag${!vTypeFilter?' active':''}" onclick="vTypeFilter='';render()">全部</span>`;
+  for (const cat of subCats) {
+    const icon = typeIcons[cat] || '';
+    html += `<span class="filter-tag${vTypeFilter===cat?' active':''}" onclick="vTypeFilter='${cat}';render()">${icon} ${cat}</span>`;
+  }
+  html += '</div>';
+
+  if (vTypeFilter) {
+    filtered = filtered.filter(i => i.sub_category === vTypeFilter);
+  }
+
+  html += `<div class="result-count">共 ${filtered.length} 件装备（按综合价值排序）</div>`;
+
+  if (filtered.length === 0) {
+    html += '<div class="empty-state"><div class="icon">🔍</div><div>没有匹配的装备</div></div>';
+  } else {
+    html += '<div style="overflow-x:auto"><table class="link-table" style="font-size:13px">';
+    html += `<thead><tr>
+      <th></th>
+      <th style="cursor:pointer" ${clickSort('name')}>名称${sortIcon('name')}</th>
+      <th>类型</th>
+      <th style="cursor:pointer" ${clickSort('_lv')}>等级${sortIcon('_lv')}</th>
+      <th style="cursor:pointer" ${clickSort('_atk')}>攻击${sortIcon('_atk')}</th>
+      <th style="cursor:pointer" ${clickSort('_matk')}>魔攻${sortIcon('_matk')}</th>
+      <th style="cursor:pointer" ${clickSort('_str')}>力量${sortIcon('_str')}</th>
+      <th style="cursor:pointer" ${clickSort('_dex')}>敏捷${sortIcon('_dex')}</th>
+      <th style="cursor:pointer" ${clickSort('_int')}>智力${sortIcon('_int')}</th>
+      <th style="cursor:pointer" ${clickSort('_luk')}>运气${sortIcon('_luk')}</th>
+      <th style="cursor:pointer" ${clickSort('_tuc')}>卷次${sortIcon('_tuc')}</th>
+      <th style="cursor:pointer" ${clickSort('_score')}>💰评分${sortIcon('_score')}</th>
+    </tr></thead><tbody>`;
+
+    for (const i of filtered) {
+      const s = i.stats || {};
+      const reqJob = s.reqJob ? {0:'全职业',1:'战士',2:'法师',4:'弓箭手',8:'飞侠',9:'战士/飞侠'}[s.reqJob] || s.reqJob : '全职业';
+      html += `<tr onclick="showDetail('item','${i.id}')" style="cursor:pointer">
+        <td><img src="${itemImg(i.id)}" loading="lazy" onerror="this.style.display='none'" style="width:28px;height:28px;object-fit:contain;image-rendering:pixelated;border-radius:4px"></td>
+        <td style="font-weight:500">${i.name || '?'}</td>
+        <td style="color:var(--text2)">${typeIcons[i.sub_category]||''} ${i.sub_category||''}<br><span style="font-size:10px">${reqJob}</span></td>
+        <td>${i._lv}</td>
+        <td style="color:var(--red)">${i._atk || '-'}</td>
+        <td style="color:var(--purple)">${i._matk || '-'}</td>
+        <td>${i._str || '-'}</td>
+        <td>${i._dex || '-'}</td>
+        <td>${i._int || '-'}</td>
+        <td>${i._luk || '-'}</td>
+        <td style="color:var(--accent2)">${i._tuc}</td>
+        <td style="font-weight:700;color:var(--accent)">${Math.round(i._score)}</td>
+      </tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
+  document.getElementById('content').innerHTML = html;
 }
 
 document.addEventListener('DOMContentLoaded', init);
