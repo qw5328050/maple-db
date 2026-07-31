@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /images/entrances/
+
+Sitemap: https://mxdmap.cn/sitemap.xml

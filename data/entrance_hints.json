@@ -20,7 +20,7 @@
       "description": "三岔路口地图右下区域，穿过树丛即可进入",
       "method": "walk",
       "position": "右下",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001000,
@@ -31,7 +31,7 @@
       "description": "射手村右侧木屋，进入空屋",
       "method": "press_up",
       "position": "射手村右上方木屋",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001003,
@@ -42,7 +42,7 @@
       "description": "射手村右侧木屋，进入空屋",
       "method": "press_up",
       "position": "射手村右上方木屋",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001002,
@@ -53,7 +53,7 @@
       "description": "空屋内右侧传送口进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001004,
@@ -64,7 +64,7 @@
       "description": "空屋内右侧传送口进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001006,
@@ -75,7 +75,7 @@
       "description": "空屋内右侧传送口进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001003,
@@ -86,7 +86,7 @@
       "description": "猪猪公园内左侧传送口进入",
       "method": "walk",
       "position": "左侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001005,
@@ -97,7 +97,7 @@
       "description": "猪猪公园内左侧传送口进入",
       "method": "walk",
       "position": "左侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001004,
@@ -108,7 +108,7 @@
       "description": "猪猪公园II内传送口进入",
       "method": "walk",
       "position": "上层",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001003,
@@ -119,7 +119,7 @@
       "description": "猪猪公园内右下角传送口进入",
       "method": "walk",
       "position": "右下",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001020,
@@ -130,7 +130,7 @@
       "description": "射手村西边小山顶部，进入树中间的隐藏传送口",
       "method": "press_up",
       "position": "顶部树丛",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001080,
@@ -141,7 +141,7 @@
       "description": "射手村东边森林右上角，隐藏在树后的传送口",
       "method": "press_up",
       "position": "右上树后",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001080,
@@ -152,7 +152,7 @@
       "description": "射手村东边森林，与NPC尤塔对话进入",
       "method": "npc",
       "position": "NPC尤塔",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001100,
@@ -163,7 +163,7 @@
       "description": "射手村迷宫入口/石巨人寺院入口处，进入发光的石头传送口",
       "method": "press_up",
       "position": "发光石头",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10001102,
@@ -174,7 +174,7 @@
       "description": "射手村迷宫入口/石巨人寺院入口处，进入发光的石头传送口",
       "method": "press_up",
       "position": "发光石头",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002000,
@@ -185,7 +185,7 @@
       "description": "魔法密林左上角传送口进入",
       "method": "walk",
       "position": "左上角",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002020,
@@ -196,7 +196,7 @@
       "description": "智慧森林左侧，进入树洞传送口",
       "method": "press_up",
       "position": "左侧树洞",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002022,
@@ -207,7 +207,7 @@
       "description": "智慧森林左侧，进入树洞传送口",
       "method": "press_up",
       "position": "左侧树洞",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002023,
@@ -218,7 +218,7 @@
       "description": "智慧森林左侧，进入树洞传送口",
       "method": "press_up",
       "position": "左侧树洞",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002023,
@@ -229,7 +229,7 @@
       "description": "猴子森林II地图上方树洞按↑进入",
       "method": "press_up",
       "position": "上方树洞",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002023,
@@ -240,7 +240,7 @@
       "description": "猴子森林II地图右侧进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002026,
@@ -251,7 +251,7 @@
       "description": "猴子森林II地图右侧进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002025,
@@ -262,7 +262,7 @@
       "description": "从「邪恶森林 I」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002020,
@@ -273,7 +273,7 @@
       "description": "智慧森林地图下方梯子爬下去",
       "method": "press_down",
       "position": "下方",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002040,
@@ -284,7 +284,7 @@
       "description": "从「忍耐森林 <阶段 1>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002042,
@@ -295,7 +295,7 @@
       "description": "从「忍耐森林 <阶段 3>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10002043,
@@ -306,7 +306,7 @@
       "description": "从「忍耐森林 <阶段 4>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003010,
@@ -317,7 +317,7 @@
       "description": "废弃都市施工现场最下方跳下去",
       "method": "jump_down",
       "position": "最下方",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003080,
@@ -328,7 +328,7 @@
       "description": "废弃都市北部施工现场顶部传送口",
       "method": "press_up",
       "position": "顶部",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003094,
@@ -339,7 +339,7 @@
       "description": "危险的鳄鱼II地图左下角进入",
       "method": "walk",
       "position": "左下角",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003096,
@@ -350,7 +350,7 @@
       "description": "危险的鳄鱼II地图左下角进入",
       "method": "walk",
       "position": "左下角",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003095,
@@ -361,7 +361,7 @@
       "description": "从「猴子沼泽 I」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003097,
@@ -372,7 +372,7 @@
       "description": "从「猴子沼泽 III」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10003096,
@@ -383,7 +383,7 @@
       "description": "猴子沼泽II地图进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004040,
@@ -394,7 +394,7 @@
       "description": "勇士部落街角右上角，跳下台阶进入",
       "method": "jump_down",
       "position": "右上角台阶",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004042,
@@ -405,7 +405,7 @@
       "description": "勇士部落街角右上角，跳下台阶进入",
       "method": "jump_down",
       "position": "右上角台阶",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004041,
@@ -416,7 +416,7 @@
       "description": "野猪的领土地图上方墙后，找到隐藏路径",
       "method": "walk",
       "position": "上方墙后",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004090,
@@ -427,7 +427,7 @@
       "description": "勇士部落东部领地右侧传送口",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004100,
@@ -438,7 +438,7 @@
       "description": "深谷I地图右侧进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004102,
@@ -449,7 +449,7 @@
       "description": "深谷I地图右侧进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004101,
@@ -460,7 +460,7 @@
       "description": "危险峡谷地图右侧进入",
       "method": "walk",
       "position": "右侧",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10005040,
@@ -471,7 +471,7 @@
       "description": "从「深林忍耐森林 <阶段 1>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10005042,
@@ -482,7 +482,7 @@
       "description": "从「深林忍耐森林 <阶段 3>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10005044,
@@ -493,7 +493,7 @@
       "description": "从「深林忍耐森林 <阶段 5>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10005045,
@@ -504,7 +504,7 @@
       "description": "从「深林忍耐森林 <阶段 6>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10006030,
@@ -515,7 +515,7 @@
       "description": "原始森林III地图右下角跳下去",
       "method": "jump_down",
       "position": "右下角",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10006120,
@@ -526,7 +526,7 @@
       "description": "腐朽隧道I/逝去的日子，进入隐藏坟墓传送口",
       "method": "press_up",
       "position": "隐藏坟墓",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10006152,
@@ -537,7 +537,7 @@
       "description": "腐朽隧道I/逝去的日子，进入隐藏坟墓传送口",
       "method": "press_up",
       "position": "隐藏坟墓",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10007020,
@@ -548,249 +548,7 @@
       "description": "洛朗洛朗地图上层传送口进入",
       "method": "walk",
       "position": "上层",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002001,
-      "parent_map_name": "自由市场<1>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<1>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002002,
-      "parent_map_name": "自由市场<2>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<2>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002003,
-      "parent_map_name": "自由市场<3>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<3>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002004,
-      "parent_map_name": "自由市场<4>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<4>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002005,
-      "parent_map_name": "自由市场<5>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<5>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002006,
-      "parent_map_name": "自由市场<6>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<6>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002007,
-      "parent_map_name": "自由市场<7>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<7>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002008,
-      "parent_map_name": "自由市场<8>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<8>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002009,
-      "parent_map_name": "自由市场<9>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<9>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002010,
-      "parent_map_name": "自由市场<10>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<10>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002011,
-      "parent_map_name": "自由市场<11>",
-      "hidden_map_id": 80002000,
-      "hidden_map_name": "自由市场入口",
-      "image": "images/entrances/to_80002000.png",
-      "description": "从「自由市场<11>」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002001,
-      "hidden_map_name": "自由市场<1>",
-      "image": "images/entrances/to_80002001.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002002,
-      "hidden_map_name": "自由市场<2>",
-      "image": "images/entrances/to_80002002.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002003,
-      "hidden_map_name": "自由市场<3>",
-      "image": "images/entrances/to_80002003.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002004,
-      "hidden_map_name": "自由市场<4>",
-      "image": "images/entrances/to_80002004.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002005,
-      "hidden_map_name": "自由市场<5>",
-      "image": "images/entrances/to_80002005.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002006,
-      "hidden_map_name": "自由市场<6>",
-      "image": "images/entrances/to_80002006.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002007,
-      "hidden_map_name": "自由市场<7>",
-      "image": "images/entrances/to_80002007.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002008,
-      "hidden_map_name": "自由市场<8>",
-      "image": "images/entrances/to_80002008.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002009,
-      "hidden_map_name": "自由市场<9>",
-      "image": "images/entrances/to_80002009.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002010,
-      "hidden_map_name": "自由市场<10>",
-      "image": "images/entrances/to_80002010.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
-    },
-    {
-      "parent_map_id": 80002000,
-      "parent_map_name": "自由市场入口",
-      "hidden_map_id": 80002011,
-      "hidden_map_name": "自由市场<11>",
-      "image": "images/entrances/to_80002011.png",
-      "description": "从「自由市场入口」地图的传送口进入",
-      "method": "walk",
-      "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040000,
@@ -801,7 +559,7 @@
       "description": "从「冒险岛体能测试 <等候室>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040001,
@@ -812,7 +570,7 @@
       "description": "从「冒险岛体能挑战 <等级 1>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040002,
@@ -823,7 +581,7 @@
       "description": "从「冒险岛体能挑战 <等级 2>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040003,
@@ -834,7 +592,7 @@
       "description": "从「冒险岛体能挑战 <等级 3>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040010,
@@ -845,7 +603,7 @@
       "description": "从「冒险岛体能测试 <简单等候室>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040011,
@@ -856,7 +614,7 @@
       "description": "从「冒险岛体能挑战 <简单等级 1>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040012,
@@ -867,7 +625,7 @@
       "description": "从「冒险岛体能挑战 <简单等级 2>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040004,
@@ -878,7 +636,7 @@
       "description": "从「冒险岛体能挑战 <等级 4>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 90040013,
@@ -889,7 +647,7 @@
       "description": "从「冒险岛体能挑战 <简单等级 3>」地图的传送口进入",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 10004110,
@@ -907,11 +665,11 @@
       "parent_map_name": "三叉路",
       "hidden_map_id": 104010001,
       "hidden_map_name": "猪的海岸",
-      "image": "",
+      "image": "images/entrances/to_10000021.png",
       "description": "三叉路地图左下角，走到绳梯处按↑键爬下去",
       "method": "press_up",
       "position": "左下角绳梯",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 104010000,
@@ -1072,11 +830,11 @@
       "parent_map_name": "海岸打猎场",
       "hidden_map_id": 104010001,
       "hidden_map_name": "猪的海岸",
-      "image": "",
+      "image": "images/entrances/to_10000021.png",
       "description": "海岸打猎场和猪的海岸互通",
       "method": "walk",
       "position": "传送口",
-      "has_image": false
+      "has_image": true
     },
     {
       "parent_map_id": 104010001,
@@ -1088,6 +846,17 @@
       "method": "walk",
       "position": "传送口",
       "has_image": false
+    },
+    {
+      "parent_map_id": 101040000,
+      "parent_map_name": "勇士部落街角",
+      "hidden_map_id": 101040001,
+      "hidden_map_name": "野猪的领土",
+      "image": "images/entrances/to_10004041.png",
+      "description": "从勇士部落东入口进入，找到隐藏路口",
+      "method": "jump_down",
+      "position": "右上角台阶",
+      "has_image": true
     }
   ]
 }
