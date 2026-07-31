@@ -649,11 +649,13 @@ function findRoute() {
     const mons = (m.monsters || []).slice(0, 3).map(x => x.cn_name).join(', ');
     const hint = ENTRANCE_HINTS[id];
     const hintHtml = hint ? `
-      <div style="margin-top:6px;padding:8px 10px;background:rgba(240,136,62,0.08);border:1px dashed var(--accent);border-radius:6px;font-size:12px">
-        <span style="color:var(--accent);font-weight:600">🔍 隐藏入口</span>
-        <span style="color:var(--text2)">从 <strong>「${hint.parent_map_name}」</strong>：${hint.description}</span>
-        <span style="color:var(--text2);margin-left:6px">${hint.method==='press_up' ? '⬆️按↑' : hint.method==='jump_down' ? '⬇️跳下' : hint.method==='npc' ? '💬NPC' : '🚶步行'} · ${hint.position}</span>
-        ${hint.has_image && hint.image ? `<br><img src="${hint.image}" style="max-width:100%;max-height:200px;border-radius:4px;margin-top:6px;border:1px solid var(--border)" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div style="margin-top:8px;background:rgba(240,136,62,0.06);border:2px dashed var(--accent);border-radius:8px;overflow:hidden">
+        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" onerror="this.style.display='none'">` : ''}
+        <div style="padding:8px 10px;font-size:12px">
+          <span style="color:var(--accent);font-weight:600">🔍 隐藏入口 · 从「${hint.parent_map_name}」</span>
+          <div style="color:var(--text2);margin-top:2px">${hint.description}</div>
+          <div style="color:var(--text2);margin-top:2px">${hint.method==='press_up' ? '⬆️按↑' : hint.method==='jump_down' ? '⬇️跳下' : hint.method==='npc' ? '💬NPC' : '🚶步行'} · ${hint.position}</div>
+        </div>
       </div>` : '';
     return `<div class="info-item" style="margin:8px 0;border-left:3px solid var(--accent)">
       <strong>${i+1}.</strong> <a href="javascript:void(0)" onclick="currentTab='maps';showDetail('map','${id}')" style="color:var(--accent);text-decoration:underline;cursor:pointer" title="查看地图详情">${name}</a> ${m.town ? '🏠' : ''}
@@ -794,13 +796,15 @@ function renderMapDetail(m) {
         </div>
       </div>
       ${hint ? `
-      <div style="margin:12px 0;padding:12px 16px;background:var(--bg);border:1px dashed var(--accent);border-radius:8px">
-        <div style="color:var(--accent);font-weight:600;margin-bottom:4px">🔍 隐藏地图入口</div>
-        <div style="font-size:13px">从 <strong>「${hint.parent_map_name}」</strong>进入：${hint.description}</div>
-        <div style="font-size:12px;color:var(--text2);margin-top:4px">
-          ${hint.method==='press_up' ? '⬆️ 按↑键' : hint.method==='jump_down' ? '⬇️ 跳下' : hint.method==='npc' ? '💬 NPC对话' : '🚶 步行进入'} · ${hint.position}
+      <div style="margin:12px 0;background:rgba(240,136,62,0.06);border:2px dashed var(--accent);border-radius:8px;overflow:hidden">
+        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" onerror="this.style.display='none'">` : ''}
+        <div style="padding:10px 14px">
+          <div style="color:var(--accent);font-weight:600;margin-bottom:4px">🔍 隐藏地图入口 · 从「${hint.parent_map_name}」</div>
+          <div style="font-size:13px">${hint.description}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">
+            ${hint.method==='press_up' ? '⬆️ 按↑键' : hint.method==='jump_down' ? '⬇️ 跳下' : hint.method==='npc' ? '💬 NPC对话' : '🚶 步行进入'} · ${hint.position}
+          </div>
         </div>
-        ${hint.image ? `<img src="${hint.image}" style="max-width:100%;border-radius:6px;margin-top:8px;border:1px solid var(--border)" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
       </div>` : ''}
       
       ${mons.length > 0 ? `
