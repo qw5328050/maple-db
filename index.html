@@ -1011,13 +1011,15 @@ function renderValue(q) {
 
   const subCats = [...new Set(scored.map(i => i.sub_category).filter(Boolean))].sort();
   const typeIcons = {Weapon:'⚔️', Hat:'🎩', Top:'👕', Bottom:'👖', Overall:'👘', Shoes:'👟', Glove:'🧤', Shield:'🛡️', Earring:'💎', Cape:'🧣'};
+  const typeNames = {Weapon:'武器/Weapon', Hat:'帽子/Hat', Top:'上衣/Top', Bottom:'裤子/Bottom', Overall:'套装/Overall', Shoes:'鞋子/Shoes', Glove:'手套/Glove', Shield:'盾牌/Shield', Earring:'耳环/Earring', Cape:'披风/Cape'};
 
   let html = '<div class="filters" style="margin-bottom:12px">';
   html += `<span style="font-size:13px;color:var(--text2);margin-right:8px">类型:</span>`;
   html += `<span class="filter-tag${!vTypeFilter?' active':''}" onclick="vTypeFilter='';render()">全部</span>`;
   for (const cat of subCats) {
     const icon = typeIcons[cat] || '';
-    html += `<span class="filter-tag${vTypeFilter===cat?' active':''}" onclick="vTypeFilter='${cat}';render()">${icon} ${cat}</span>`;
+    const tname = typeNames[cat] || cat;
+    html += `<span class="filter-tag${vTypeFilter===cat?' active':''}" onclick="vTypeFilter='${cat}';render()">${icon} ${tname}</span>`;
   }
   html += '</div>';
 
@@ -1052,7 +1054,7 @@ function renderValue(q) {
       html += `<tr onclick="showDetail('item','${i.id}')" style="cursor:pointer">
         <td><img src="${itemImg(i.id)}" loading="lazy" onerror="this.style.display='none'" style="width:28px;height:28px;object-fit:contain;image-rendering:pixelated;border-radius:4px"></td>
         <td style="font-weight:500">${i.name || '?'}</td>
-        <td style="color:var(--text2)">${typeIcons[i.sub_category]||''} ${i.sub_category||''}<br><span style="font-size:10px">${reqJob}</span></td>
+        <td style="color:var(--text2)">${typeIcons[i.sub_category]||''} ${typeNames[i.sub_category]||i.sub_category||''}<br><span style="font-size:10px">${reqJob}</span></td>
         <td>${i._lv}</td>
         <td style="color:var(--red)">${i._atk || '-'}</td>
         <td style="color:var(--purple)">${i._matk || '-'}</td>
