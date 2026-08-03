@@ -23,69 +23,14 @@
       "has_image": true
     },
     {
-      "parent_map_id": 10001000,
+      "parent_map_id": 100000000,
       "parent_map_name": "射手村",
-      "hidden_map_id": 10001002,
-      "hidden_map_name": "空屋",
+      "hidden_map_id": 100000002,
+      "hidden_map_name": "花蘑菇",
       "image": "images/entrances/to_10001002.png",
-      "description": "射手村右侧木屋，进入空屋",
+      "description": "射手村右侧木屋，按↑键进入花蘑菇地图",
       "method": "press_up",
       "position": "射手村右上方木屋",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10001003,
-      "parent_map_name": "铁甲猪公园",
-      "hidden_map_id": 10001002,
-      "hidden_map_name": "空屋",
-      "image": "images/entrances/to_10001002.png",
-      "description": "射手村右侧木屋，进入空屋",
-      "method": "press_up",
-      "position": "射手村右上方木屋",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10001002,
-      "parent_map_name": "空屋",
-      "hidden_map_id": 10001003,
-      "hidden_map_name": "铁甲猪公园",
-      "image": "images/entrances/to_10001003.png",
-      "description": "空屋内右侧传送口进入",
-      "method": "walk",
-      "position": "右侧",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10001004,
-      "parent_map_name": "铁甲猪公园 II",
-      "hidden_map_id": 10001003,
-      "hidden_map_name": "铁甲猪公园",
-      "image": "images/entrances/to_10001003.png",
-      "description": "空屋内右侧传送口进入",
-      "method": "walk",
-      "position": "右侧",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10001006,
-      "parent_map_name": "猪猪公园休息处",
-      "hidden_map_id": 10001003,
-      "hidden_map_name": "铁甲猪公园",
-      "image": "images/entrances/to_10001003.png",
-      "description": "空屋内右侧传送口进入",
-      "method": "walk",
-      "position": "右侧",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10001005,
-      "parent_map_name": "别人的家",
-      "hidden_map_id": 10001004,
-      "hidden_map_name": "铁甲猪公园 II",
-      "image": "images/entrances/to_10001004.png",
-      "description": "铁甲猪公园内左侧传送口进入",
-      "method": "walk",
-      "position": "左侧",
       "has_image": true
     },
     {
@@ -155,40 +100,7 @@
       "has_image": true
     },
     {
-      "parent_map_id": 10002020,
-      "parent_map_name": "智慧森林",
-      "hidden_map_id": 10002021,
-      "hidden_map_name": "猴子森林 I",
-      "image": "images/entrances/to_10002021.png",
-      "description": "智慧森林左侧，进入树洞传送口",
-      "method": "press_up",
-      "position": "左侧树洞",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10002022,
-      "parent_map_name": "树洞迷宫：猴子森林 I",
-      "hidden_map_id": 10002021,
-      "hidden_map_name": "猴子森林 I",
-      "image": "images/entrances/to_10002021.png",
-      "description": "智慧森林左侧，进入树洞传送口",
-      "method": "press_up",
-      "position": "左侧树洞",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10002023,
-      "parent_map_name": "猴子森林 II",
-      "hidden_map_id": 10002021,
-      "hidden_map_name": "猴子森林 I",
-      "image": "images/entrances/to_10002021.png",
-      "description": "智慧森林左侧，进入树洞传送口",
-      "method": "press_up",
-      "position": "左侧树洞",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10002020,
+      "parent_map_id": 100040100,
       "parent_map_name": "智慧森林",
       "hidden_map_id": 10002027,
       "hidden_map_name": "森林下层",
@@ -331,28 +243,6 @@
       "has_image": true
     },
     {
-      "parent_map_id": 10004102,
-      "parent_map_name": "危险峡谷 II",
-      "hidden_map_id": 10004101,
-      "hidden_map_name": "危险峡谷",
-      "image": "images/entrances/to_10004101.png",
-      "description": "深谷I地图右侧进入",
-      "method": "walk",
-      "position": "右侧",
-      "has_image": true
-    },
-    {
-      "parent_map_id": 10004101,
-      "parent_map_name": "危险峡谷",
-      "hidden_map_id": 10004102,
-      "hidden_map_name": "危险峡谷 II",
-      "image": "images/entrances/to_10004102.png",
-      "description": "危险峡谷地图右侧进入",
-      "method": "walk",
-      "position": "右侧",
-      "has_image": true
-    },
-    {
       "parent_map_id": 10006030,
       "parent_map_name": "原始森林 III",
       "hidden_map_id": 10006031,
@@ -463,14 +353,14 @@
       "has_image": true
     },
     {
-      "parent_map_id": 10004110,
-      "parent_map_name": "深谷 II",
-      "hidden_map_id": 10004111,
-      "hidden_map_name": "燃烧之地 I（火野猪领地）",
+      "parent_map_id": 106000100,
+      "parent_map_name": "幽深的峡谷Ⅱ",
+      "hidden_map_id": 106000101,
+      "hidden_map_name": "火焰之地Ⅰ",
       "image": "images/entrances/to_10004111.png",
-      "description": "勇士部落→深谷 II 地图左侧中间，走到藤蔓/梯子处按↑键进入燃烧之地 I（火野猪领地）",
-      "method": "press_up",
-      "position": "左侧中部",
+      "description": "幽深的峡谷Ⅱ隐藏入口，通往火焰之地Ⅰ（火野猪领地）",
+      "method": "walk",
+      "position": "峡谷深处",
       "has_image": true
     },
     {
@@ -692,6 +582,17 @@
       "method": "walk",
       "position": "右侧",
       "has_image": false
+    },
+    {
+      "parent_map_id": 100040110,
+      "parent_map_name": "树林的底层",
+      "hidden_map_id": 100040100,
+      "hidden_map_name": "智慧森林",
+      "image": "images/entrances/to_10002021.png",
+      "description": "树林的底层隐藏入口，通往智慧森林（与猴子森林入口共用截图）",
+      "method": "walk",
+      "position": "树林深处",
+      "has_image": true
     }
   ]
 }

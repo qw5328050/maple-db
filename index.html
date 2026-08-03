@@ -40,6 +40,8 @@
     "query-input": "required name=search_term_string"
   }
 }
+
+
 </script>
 <style>
 :root {
@@ -247,6 +249,14 @@ main { max-width: 1400px; margin: 0 auto; padding: 16px; }
   .detail-panel { padding: 16px; }
   .detail-header { flex-direction: column; align-items: center; text-align: center; }
 }
+
+/* 隐藏入口截图放大 */
+.img-lightbox {display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);z-index:9999;cursor:zoom-out;align-items:center;justify-content:center}
+.img-lightbox.show {display:flex}
+.img-lightbox img {max-width:95vw;max-height:95vh;object-fit:contain;box-shadow:0 0 60px rgba(240,136,62,0.3)}
+.img-lightbox .close-hint {position:absolute;top:16px;right:24px;color:#888;font-size:32px;cursor:pointer;z-index:1}
+.img-lightbox .close-hint:hover {color:#f0883e}
+.entrance-img {cursor:zoom-in}
 </style>
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f0883e'/%3E%3Cstop offset='100%25' stop-color='%23d4380d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 10 L55 38 L80 15 L65 42 L95 45 L65 52 L82 78 L55 58 L50 95 L45 58 L18 78 L35 52 L5 45 L35 42 L20 15 L45 38 Z' fill='url(%23g)' stroke='%23b0300a' stroke-width='1.5'/%3E%3C/svg%3E">
@@ -718,7 +728,7 @@ function findRoute() {
     const hint = ENTRANCE_HINTS[id];
     const hintHtml = hint ? `
       <div style="margin-top:8px;background:rgba(240,136,62,0.06);border:2px dashed var(--accent);border-radius:8px;overflow:hidden">
-        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" onerror="this.style.display='none'">` : '<div style="padding:24px 16px;text-align:center;color:var(--text2);background:rgba(240,136,62,0.04);font-size:12px">📸 入口截图开发中</div>'}
+        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" class="entrance-img" onclick="event.stopPropagation();enlargeImg(this.src)" onerror="this.style.display='none'">` : '<div style="padding:24px 16px;text-align:center;color:var(--text2);background:rgba(240,136,62,0.04);font-size:12px">📸 入口截图开发中</div>'}
         <div style="padding:8px 10px;font-size:12px">
           <span style="color:var(--accent);font-weight:600">🔍 隐藏入口 · 从「${hint.parent_map_name}」</span>
           <div style="color:var(--text2);margin-top:2px">${hint.description}</div>
@@ -865,7 +875,7 @@ function renderMapDetail(m) {
       </div>
       ${hint ? `
       <div style="margin:12px 0;background:rgba(240,136,62,0.06);border:2px dashed var(--accent);border-radius:8px;overflow:hidden">
-        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" onerror="this.style.display='none'">` : '<div style="padding:24px 16px;text-align:center;color:var(--text2);background:rgba(240,136,62,0.04);font-size:12px">📸 入口截图开发中</div>'}
+        ${hint.image ? `<img src="${hint.image}" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#111;border-bottom:1px solid rgba(240,136,62,0.2)" alt="隐藏入口截图" loading="lazy" class="entrance-img" onclick="event.stopPropagation();enlargeImg(this.src)" onerror="this.style.display='none'">` : '<div style="padding:24px 16px;text-align:center;color:var(--text2);background:rgba(240,136,62,0.04);font-size:12px">📸 入口截图开发中</div>'}
         <div style="padding:10px 14px">
           <div style="color:var(--accent);font-weight:600;margin-bottom:4px">🔍 隐藏地图入口 · 从「${hint.parent_map_name}」</div>
           <div style="font-size:13px">${hint.description}</div>
@@ -1261,6 +1271,14 @@ function renderValue(q) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function enlargeImg(src) {
+  const lb = document.getElementById('imgLightbox');
+  document.getElementById('imgLightboxImg').src = src;
+  lb.classList.add('show');
+}
 </script>
+
+<div class="img-lightbox" id="imgLightbox" onclick="this.classList.remove('show')"><span class="close-hint">&times;</span><img id="imgLightboxImg" src="" alt="放大查看"></div>
 </body>
 </html>
