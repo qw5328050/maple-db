@@ -257,6 +257,60 @@ main { max-width: 1400px; margin: 0 auto; padding: 16px; }
 .img-lightbox .close-hint {position:absolute;top:16px;right:24px;color:#888;font-size:32px;cursor:pointer;z-index:1}
 .img-lightbox .close-hint:hover {color:#f0883e}
 .entrance-img {cursor:zoom-in}
+
+/* Footer - 支持 + 推广 */
+.site-footer {
+  border-top: 2px solid var(--border);
+  margin-top: 40px;
+  padding: 0;
+  background: var(--bg2);
+}
+.footer-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.footer-col h4 { font-size: 15px; margin-bottom: 10px; color: var(--text); }
+.footer-col p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.donate-btns { display: flex; gap: 8px; margin-top: 10px; }
+.donate-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #07c160, #06ad56);
+  color: #fff; border-radius: 8px; font-size: 13px;
+  font-weight: 600; cursor: pointer; transition: all .2s; border: none;
+}
+.donate-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(7,193,96,.3); }
+.qr-popup { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.7); align-items: center; justify-content: center; }
+.qr-popup.show { display: flex; }
+.qr-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px; text-align: center;
+  animation: slideUp .25s ease; max-width: 320px;
+}
+.qr-card img { width: 240px; height: 240px; object-fit: contain; border-radius: 12px; background: #fff; padding: 8px; }
+.server-links { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.server-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 8px;
+  text-decoration: none; color: var(--text); transition: all .2s;
+}
+.server-link:hover { border-color: var(--accent); background: var(--bg3); transform: translateX(2px); }
+.server-link .server-name { font-size: 14px; font-weight: 500; }
+.server-link .server-badge {
+  font-size: 11px; padding: 2px 10px; border-radius: 12px;
+  background: rgba(240,136,62,.15); color: var(--accent); font-weight: 500;
+}
+.footer-bottom { text-align: center; padding: 16px; font-size: 11px; color: var(--text2); border-top: 1px solid var(--border); }
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .qr-card img { width: 200px; height: 200px; }
+}
+
 </style>
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f0883e'/%3E%3Cstop offset='100%25' stop-color='%23d4380d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 10 L55 38 L80 15 L65 42 L95 45 L65 52 L82 78 L55 58 L50 95 L45 58 L18 78 L35 52 L5 45 L35 42 L20 15 L45 38 Z' fill='url(%23g)' stroke='%23b0300a' stroke-width='1.5'/%3E%3C/svg%3E">
@@ -311,8 +365,39 @@ var _hmt = _hmt || [];
 
 <main id="content"><div class="loading"><div class="spinner"></div><div style="margin-top:12px">加载数据中...</div></div></main>
 
-<footer style="text-align:center;padding:24px 16px;color:var(--text2);font-size:12px;border-top:1px solid var(--border);margin-top:32px">
-  📬 数据有误或建议？欢迎反馈至 <a href="mailto:mxdmap@163.com" style="color:var(--accent)">mxdmap@163.com</a>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>💛 支持本站</h4>
+      <p>如果这个数据库帮到了你，可以请站长喝杯奶茶 ☕</p>
+      <div class="donate-btns">
+        <span class="donate-btn" onclick="document.getElementById('donateQr').classList.add('show')">📱 微信赞赏</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>🎮 推荐私服</h4>
+      <p>以下私服与本数据库搭配使用，点击可直接访问：</p>
+      <div class="server-links">
+        <a href="#" class="server-link" target="_blank" rel="nofollow">
+          <span class="server-name">虚位以待</span>
+          <span class="server-badge">推广招租</span>
+        </a>
+        <a href="#" class="server-link" target="_blank" rel="nofollow">
+          <span class="server-name">虚位以待</span>
+          <span class="server-badge">推广招租</span>
+        </a>
+        <a href="#" class="server-link" target="_blank" rel="nofollow">
+          <span class="server-name">虚位以待</span>
+          <span class="server-badge">推广招租</span>
+        </a>
+      </div>
+      <p style="margin-top:10px;font-size:12px">📬 推广合作联系 <a href="mailto:mxdmap@163.com" style="color:var(--accent);font-weight:500">mxdmap@163.com</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    📬 数据反馈：<a href="mailto:mxdmap@163.com" style="color:var(--accent)">mxdmap@163.com</a>
+    &nbsp;·&nbsp; 数据来源 <a href="https://mxdzlk.com" target="_blank" style="color:var(--text2)">mxdzlk.com</a>
+  </div>
 </footer>
 
 <script>
@@ -1280,5 +1365,15 @@ function enlargeImg(src) {
 </script>
 
 <div class="img-lightbox" id="imgLightbox" onclick="this.classList.remove('show')"><span class="close-hint">&times;</span><img id="imgLightboxImg" src="" alt="放大查看"></div>
+
+<!-- 赞赏码弹窗 -->
+<div class="qr-popup" id="donateQr" onclick="this.classList.remove('show')">
+  <div class="qr-card" onclick="event.stopPropagation()">
+    <img src="images/donate/wechat.png" alt="微信赞赏码" onerror="this.outerHTML='<p style=padding:30px;color:var(--text2);text-align:center>请将赞赏码截图保存为<br><code style=color:var(--accent)>images/donate/wechat.png</code></p>'">
+    <p style="font-size:13px;color:var(--text2);margin-top:10px">微信扫码 · 金额随意</p>
+    <p style="font-size:11px;color:var(--text2);margin-top:4px">点击空白处关闭</p>
+  </div>
+</div>
+
 </body>
 </html>
