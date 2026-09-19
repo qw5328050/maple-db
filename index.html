@@ -341,7 +341,7 @@ var _hmt = _hmt || [];
     <h3>热门地图</h3>
     <p>射手村 · 魔法密林 · 勇士部落 · 废弃都市 · 明珠港 · 林中之城 · 蚂蚁洞 · 龙峡谷</p>
     <h3>功能</h3>
-    <p>怪物图鉴 | 地图图鉴 | 物品图鉴 | 地图导航 | 装备估价（含卷轴估价）</p>
+    <p>怪物图鉴 | 物品图鉴 | 地图导航 | 装备估价（含卷轴估价）</p>
     <p style="margin-top:20px;color:#888">请启用 JavaScript 以获得完整体验。mxdmap.cn</p>
   </div>
 </noscript>
@@ -351,7 +351,6 @@ var _hmt = _hmt || [];
   <div class="logo">🍁 冒险岛怀旧服 DB</div>
   <nav id="tabs">
     <button data-tab="monsters" class="active">怪物图鉴</button>
-    <button data-tab="maps">地图图鉴</button>
     <button data-tab="items">物品图鉴</button>
     <button data-tab="navigate">🗺️ 地图导航</button>
     <button data-tab="value">💰 装备估价</button>
@@ -797,7 +796,7 @@ function findRoute() {
         </div>
       </div>` : '';
     return `<div class="info-item" style="margin:8px 0;border-left:3px solid var(--accent)">
-      <strong>${i+1}.</strong> <a href="javascript:void(0)" onclick="currentTab='maps';showDetail('map','${id}')" style="color:var(--accent);text-decoration:underline;cursor:pointer" title="查看地图详情">${name}</a> ${m.town ? '🏠' : ''}
+      <strong>${i+1}.</strong> <a href="javascript:void(0)" onclick="showDetail('map','${id}')" style="color:var(--accent);text-decoration:underline;cursor:pointer" title="查看地图详情">${name}</a> ${m.town ? '🏠' : ''}
       ${mons ? `<div style="font-size:11px;color:var(--text2)">🐾 ${mons}</div>` : ''}
       ${hintHtml}
       ${i < path.length-1 ? '<div style="text-align:center;color:var(--text2);margin-top:4px">↓</div>' : ' 🎯'}
