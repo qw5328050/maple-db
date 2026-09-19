@@ -644,11 +644,31 @@ function renderMaps(q) {
 }
 
 // ===== ITEMS =====
+let itemTypeFilter = '', itemJobFilter = '';
+
 function renderItems(q) {
   let filtered = ITEMS;
+  // 类型筛选
+  if (itemTypeFilter === 'Weapon') {
+    filtered = filtered.filter(i => i.sub_category === 'Weapon');
+  } else if (itemTypeFilter === 'Equip') {
+    filtered = filtered.filter(i => i.category === 'Equipment' && i.sub_category !== 'Weapon');
+  } else if (itemTypeFilter) {
+    filtered = filtered.filter(i => i.category === itemTypeFilter);
+  }
+  // 职业筛选（reqJob 是 bitmask：1战士 2法师 4弓手 8飞侠，0=全职业）
+  if (itemJobFilter !== '') {
+    const jobBit = Number(itemJobFilter);
+    filtered = filtered.filter(i => {
+      const rj = (i.stats || {}).reqJob;
+      if (rj === undefined || rj === null) return false;
+      const n = Number(rj);
+      return jobBit === 0 ? n === 0 : (n > 0 && (n & jobBit) !== 0);
+    });
+  }
   if (q) {
     const ql = q.toLowerCase();
-    filtered = ITEMS.filter(i => 
+    filtered = filtered.filter(i => 
       (i.name || '').toLowerCase().includes(ql) ||
       String(i.id).includes(ql) ||
       (i.category || '').toLowerCase().includes(ql) ||
@@ -656,19 +676,27 @@ function renderItems(q) {
     );
   }
   
-  const cats = [...new Set(filtered.map(i => i.category).filter(Boolean))].sort();
-  
   const html = filtered.slice(0, 300).map(i => {
     const cnName = i.name?.split('/')[0] || '未知';
     const stats = i.stats || {};
+    const reqLevel = stats.reqLevel;
+    const lvBadge = (reqLevel !== undefined && reqLevel !== null)
+      ? `<span style="color:var(--red);font-weight:700;font-size:12px;flex-shrink:0">Lv.${reqLevel}</span>`
+      : '';
     const statStr = Object.entries(stats).filter(([k,v]) => v && k.startsWith('inc')).slice(0,3)
-      .map(([k,v]) => `<span class="stat-pill">${k.replace('inc','')}+${v}</span>`).join('');
+      .map(([k,v]) => {
+        const label = k.replace('inc','');
+        if ((k === 'incPAD' || k === 'incMAD') && stats.pad_range) {
+          return `<span class="stat-pill">${label}+${v} <span style="color:var(--text2);font-weight:400">(${stats.pad_range})</span></span>`;
+        }
+        return `<span class="stat-pill">${label}+${v}</span>`;
+      }).join('');
     return `
     <div class="card" onclick="showDetail('item','${i.id}')">
       <div class="card-header-row">
         <img class="card-thumb" src="${itemImg(i.id)}" loading="lazy" onerror="this.style.display='none'" alt="">
         <div class="card-info">
-          <div class="card-name">${cnName}</div>
+          <div class="card-name" style="display:flex;justify-content:space-between;align-items:baseline;gap:6px"><span>${cnName}</span>${lvBadge}</div>
           <div class="card-sub">${i.category || ''} · ${i.sub_category || ''}</div>
           ${statStr ? `<div class="card-stats">${statStr}</div>` : ''}
         </div>
@@ -676,7 +704,18 @@ function renderItems(q) {
     </div>`;
   }).join('');
 
+  const typeChips = [['','全部'],['Weapon','⚔️ 武器'],['Equip','🛡️ 装备'],['Consumable','💊 消耗'],['Setup','🪑 设置'],['Etc','📦 其他']];
+  const jobChips = [['','全部'],['0','全职业'],['1','战士'],['2','魔法师'],['4','弓箭手'],['8','飞侠']];
+
   document.getElementById('content').innerHTML = `
+    <div class="filters" style="margin-bottom:8px">
+      <span style="font-size:13px;color:var(--text2);margin-right:8px">类型:</span>
+      ${typeChips.map(([v,l]) => `<span class="filter-tag${itemTypeFilter===v?' active':''}" onclick="itemTypeFilter='${v}';render()">${l}</span>`).join('')}
+    </div>
+    <div class="filters" style="margin-bottom:10px">
+      <span style="font-size:13px;color:var(--text2);margin-right:8px">职业:</span>
+      ${jobChips.map(([v,l]) => `<span class="filter-tag${itemJobFilter===v?' active':''}" onclick="itemJobFilter='${v}';render()">${l}</span>`).join('')}
+    </div>
     <div class="result-count">共 ${filtered.length} 件物品${filtered.length > 300 ? ' (显示前300件，请搜索缩小范围)' : ''}</div>
     <div class="grid">${html || '<div class="empty-state"><div class="icon">🔍</div>未找到匹配的物品</div>'}</div>
   `;
